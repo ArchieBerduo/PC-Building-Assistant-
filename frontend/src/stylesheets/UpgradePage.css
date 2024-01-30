@@ -1,0 +1,37 @@
+/* UpgradePage.css */
+.component-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+  }
+  
+  .component-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three items per row */
+    gap: 10px;
+    width: 80%;
+    margin: auto;
+  }
+  
+  .form-row {
+    display: contents;
+  }
+  
+  label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+  
+  select {
+    margin-top: 5px;
+    width: 100%; /* Make dropdowns longer */
+    /* Adjust the height if necessary */
+  }
+  
+  button {
+    grid-column: 1 / -1; /* Span the entire width */
+    cursor: pointer;
+  }
+  

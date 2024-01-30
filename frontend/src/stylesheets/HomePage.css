@@ -1,0 +1,25 @@
+/* HomePage.css */
+.home-page-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100vh; /* Adjust as needed to fit your design */
+  }
+  
+  .home-page-buttons button {
+    background: none;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .home-page-buttons button img {
+    width: 150px; /* Adjusted to three times the original size */
+    height: auto;
+  }
+  
+  .home-page-buttons button span {
+    display: block;
+    margin-top: 8px;
+  }
+  

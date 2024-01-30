@@ -1,48 +1,34 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import getUserInfo from '../../utilities/decodeJwt'
+import '../../stylesheets/HomePage.css';
 const HomePage = () => {
-    const [user, setUser] = useState({})
-    const navigate = useNavigate()
-    const handleClick = (e) => {
-        e.preventDefault();
-        localStorage.removeItem('accessToken')
-        return navigate('/')
-    }
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        setUser(getUserInfo())
-    }, [])
+    const handleLogout = () => {
+        // Perform logout logic
+        navigate('/'); // Redirect to landing page after logout
+      };
 
 
-    if (!user) return (
-        <div><h4>Log in to view this page.</h4></div>)
-    const { id, email, username, password } = user
+  
+  
     return (
-        <>
-            <div>
-                <h3>
-                    Welcome
-                    <span className='username'> @{username}</span>
-                </h3>
-                <h3>
-                    Your userId in mongo db is
-                    <span className='userId'> {id}</span>
-                </h3>
-                <h3>
-                    Your registered email is
-                    <span className='email'> {email}</span>
-                </h3>
-                <h3>
-                    Your password is
-                    <span className='password'> {password} ( hashed )</span>
-                </h3>
-            </div>
-            <button onClick={(e) => handleClick(e)}>
-                Log Out
-            </button>
-        </>
-    )
-}
+        <div className="home-page-buttons">
+          <button onClick={() => navigate('/privateUserProfile')}>
+            <img src='/profileIcon.png' alt="Profile" />
+            <span>Profile</span>
+          </button>
+          <button onClick={() => navigate('/upgradePage')}>
+            <img src='/upgradeIcon.png' alt="Upgrade" />
+            <span>Upgrade</span>
+          </button>
+          <button onClick={handleLogout}>
+            <img src='/logoutIcon.png' alt="Logout" />
+            <span>Logout</span>
+          </button>
+        </div>
+      );
+    };
 
 export default HomePage

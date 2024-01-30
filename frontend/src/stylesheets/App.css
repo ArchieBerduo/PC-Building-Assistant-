@@ -1,0 +1,15 @@
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  /* Adjust the width as per your navbar's width */
+  .navbar {
+    width: 75px;
+  }
+  
+  .main-content-area {
+    flex-grow: 1;
+    padding-top: 20px; /* Adjust as needed */
+  }
+  
