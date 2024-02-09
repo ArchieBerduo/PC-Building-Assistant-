@@ -1,7 +1,7 @@
 /* MainContentLayout.css */
 /* MainContentLayout.css */
 .main-content {
-    margin-left: 75px; /* Adjust to match the sidebar width */
+    margin-right: 450px; /* Adjust to match the sidebar width */
     padding-top: 20px; /* Space from the top */
     flex-grow: 1; /* Take up remaining space */
     display: flex;

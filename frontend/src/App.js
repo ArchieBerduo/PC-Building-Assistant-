@@ -3,6 +3,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 
 // We import all the components we need in our app
+import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from "./components/navbar";
 import LandingPage from "./components/pages/landingPage";
 import HomePage from "./components/pages/homePage";

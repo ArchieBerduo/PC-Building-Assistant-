@@ -19,7 +19,7 @@ const HomePage = () => {
             <img src='/profileIcon.png' alt="Profile" />
             <span>Profile</span>
           </button>
-          <button onClick={() => navigate('/upgradePage')}>
+          <button onClick={() => navigate('/upgrade')}>
             <img src='/upgradeIcon.png' alt="Upgrade" />
             <span>Upgrade</span>
           </button>

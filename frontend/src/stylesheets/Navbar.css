@@ -10,3 +10,10 @@
   .content {
     margin-left: 75px; /* Same as the width of the sidebar */
   }
+  .hidden {
+    display: none;
+  }
+  
+  .visible-navbar {
+    /* Your existing navbar styles */
+  }
