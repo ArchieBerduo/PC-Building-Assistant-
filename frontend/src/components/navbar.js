@@ -26,6 +26,7 @@ export default function Navbar() {
         {!onHomePage && <Nav.Link href="/">Start</Nav.Link>}
         {!onHomePage && <Nav.Link href="/privateUserProfile">Profile</Nav.Link>}
         {!onHomePage && <Nav.Link href="/upgrade">Upgrade</Nav.Link>}
+        {!onHomePage && <Nav.Link href="/preference">Preference</Nav.Link>}
         {/* Always show the Home link */}
         <Nav.Link href="/home">Home</Nav.Link>
       </Nav>

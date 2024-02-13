@@ -11,6 +11,9 @@ import UpgradePage from "./components/pages/upgradePage";
 import Login from "./components/pages/loginPage";
 import Signup from "./components/pages/registerPage";
 import PrivateUserProfile from "./components/pages/privateUserProfilePage";
+import RecommendationResultPage from "./components/pages/RecommendationResultPage";
+import UpgradepreferencesPage from "./components/pages/UpgradePreferencesPage";
+import UpgradeSelectionPage from "./components/pages/UpgradeSelectionPage";
 import { createContext, useState, useEffect } from "react";
 import getUserInfo from "./utilities/decodeJwt";
 import '../src/stylesheets/App.css';
@@ -37,6 +40,9 @@ const App = () => {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
+          <Route exact path="/recommendation" element={<RecommendationResultPage />} />
+          <Route exact path="/preference" element={<UpgradepreferencesPage />} />
+          <Route exact path="/upgradeSelection" element={<UpgradeSelectionPage />} />
         </Routes>
       </UserContext.Provider>
       </div>
