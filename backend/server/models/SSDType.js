@@ -1,33 +1,33 @@
 const mongoose = require("mongoose");
 
 const ssdSchema = new mongoose.Schema({
-  type: {
+  Type: {
     type: String,
-    required: true,
+    required: false,
     label: "Type", // Could be "SSD" for all entries if this dataset exclusively contains SSDs
   },
-  modelType: {
+  Brand: {
     type: String,
-    required: true,
-    label: "Model Type", // E.g., "NVMe", "SATA"
-  },
-  brand: {
-    type: String,
-    required: true,
+    required: false,
     label: "Brand",
   },
-  model: {
+  Model: {
     type: String,
-    required: true,
+    required: false,
     label: "Model",
   },
-  storageSize: {
+  Size: {
     type: String,
-    required: true,
-    label: "Storage Size", // E.g., "256GB", "1TB"
+    required: false,
+    label: "Size", // E.g., "256GB", "1TB"
+  },
+  Model_Type: {
+    type: String,
+    required: false,
+    label: "Model_Type", // E.g., "NVMe", "SATA"
   },
 }, {
-  collection: "ssds" // Specifying the collection name in the database
+  collection: "SSD" // Specifying the collection name in the database
 });
 
 module.exports = mongoose.model('SSD', ssdSchema);

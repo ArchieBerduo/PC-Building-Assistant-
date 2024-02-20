@@ -1,48 +1,43 @@
 const mongoose = require("mongoose");
 
 const ramSchema = new mongoose.Schema({
-  type: {
+  Type: {
     type: String,
     required: true,
     label: "Type", // E.g., DDR4, DDR3
   },
-  brand: {
+  Brand: {
     type: String,
     required: true,
     label: "Brand",
   },
-  model: {
+  Model: {
     type: String,
     required: true,
     label: "Model",
   },
-  modelNumber: {
+  Type_Speed: {
     type: String,
     required: true,
-    label: "Model Number",
+    label: "Type_Speed", // E.g., "3200MHz"
   },
-  speed: {
+  CAS_Latency: {
     type: String,
     required: true,
-    label: "Speed", // E.g., "3200MHz"
+    label: "CAS_Latency", // E.g., "CL16"
   },
-  casLatency: {
-    type: String,
-    required: true,
-    label: "CAS Latency", // E.g., "CL16"
-  },
-  ramSticks: {
+  RAM_Sticks: {
     type: Number,
     required: true,
-    label: "RAM Sticks", // E.g., 2 for a dual kit
+    label: "RAM_Sticks", // E.g., 2 for a dual kit
   },
-  gbAmount: {
+  GB_Amount: {
     type: String,
     required: true,
-    label: "GB Amount", // E.g., "16GB"
+    label: "GB_Amount", // E.g., "16GB"
   },
 }, {
-  collection: "rams" // Specifying the collection name in the database
+  collection: "RAM" // Specifying the collection name in the database
 });
 
 module.exports = mongoose.model('RAM', ramSchema);

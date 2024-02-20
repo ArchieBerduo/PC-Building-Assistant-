@@ -1,0 +1,43 @@
+/* UpgradeSelectionPage.css */
+
+.upgrade-selection-page {
+    text-align: center;
+}
+
+.title {
+    margin-top: 50px; /* Adjust as needed */
+}
+
+.boxes-container {
+    display: flex;
+    justify-content: center; /* Center align all boxes horizontally */
+    align-items: center; /* Align items vertically in the center */
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.sub-title-box, .cost-efficient, .balance, .premium {
+    width: 320px; /* Adjust width as needed */
+    height: 50px; /* Adjust height as needed */
+    border: 1px solid #000;
+    text-align: center;
+}
+
+.cost-efficient {
+    margin-right: 10px; /* Adjust margin to create 10px space between each box */
+}
+
+.balance {
+    margin-right: 10px; /* Adjust margin to create 10px space between each box */
+    margin-left: 10px; /* Adjust margin to create 10px space between each box */
+}
+
+.premium {
+    margin-left: 10px; /* Adjust margin to create 10px space between each box */
+}
+
+.text-box {
+    width: 320px; /* Adjust width as needed */
+    height: 400px; /* Adjust height as needed */
+    border: 1px solid #000;
+    text-align: center;
+}

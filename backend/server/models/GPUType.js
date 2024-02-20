@@ -1,41 +1,43 @@
 const mongoose = require("mongoose");
 
 const gpuSchema = new mongoose.Schema({
-  type: {
+  Type: {
     type: String,
-    required: true,
+    required: false,
     label: "Type", // GPU type
   },
-  brand: {
+  Brand: {
     type: String,
-    required: true,
+    required: false,
     label: "Brand", // Manufacturer
   },
-  modelName: {
+  Model: {
     type: String,
-    required: true,
-    label: "Brand", // Manufacturer
+    required: false,
+    label: "Model",
   },
-  modelType: {
+  GPU_Model: {
     type: String,
-    required: true,
-    label: "Model Type", // Specific model
+    required: false,
+    label: "GPUModel", // Manufacturer
   },
-  memory: {
+  VRAM_Size: {
     type: String,
-    required: true,
-    label: "VRAM Memory", // Memory size and type
+    required: false,
+    default: 'Unknown',
+    label: "VRAM_Size", // Memory size and type
   },
-  modelTier: {
+  GPU_Model_Type: {
     type: String,
-    required: true,
-    label: "GPU Model tier", // Memory size and type
+    required: false,
+    //default: 'Unknown',
+    label: "GPU_Model_Type", // Memory size and type
   }
 
   // Assuming you have other relevant specifications you'd like to include
   // but excluding Benchmark and URL as per your request
 }, {
-  collection: "gpus" // Specifying the collection name in the database
+  collection: "GPU" // Specifying the collection name in the database
 });
 
 module.exports = mongoose.model('GPU', gpuSchema);

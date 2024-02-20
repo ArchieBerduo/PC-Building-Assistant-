@@ -1,38 +1,38 @@
 const mongoose = require("mongoose");
 
 const hddSchema = new mongoose.Schema({
-  type: {
+  Type: {
     type: String,
-    required: true,
+    required: false,
     label: "Type", // HDD or SSD, if applicable
   },
-  brand: {
+  Brand: {
     type: String,
-    required: true,
+    required: false,
     label: "Brand",
   },
-  model: {
+  Model: {
     type: String,
-    required: true,
+    required: false,
     label: "Model",
   },
-  storageSize: {
+  Model_Name: {
     type: String,
-    required: true,
-    label: "Storage Size", // E.g., "1TB"
+    required: false,
+    label: "Model_Name",
   },
-  modelName: {
+  Storage_Size: {
     type: String,
-    required: true,
-    label: "Model Name",
+    required: false,
+    label: "Storage_Size", // E.g., "1TB"
   },
-  year: {
+  Year: {
     type: Number,
-    required: true,
+    required: false,
     label: "Year",
   },
 }, {
-  collection: "hdds" // Specifying the collection name in the database
+  collection: "HDD" // Specifying the collection name in the database
 });
 
 module.exports = mongoose.model('HDD', hddSchema);

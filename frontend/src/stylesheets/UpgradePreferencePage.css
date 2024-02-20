@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.form-container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-dropdown-container {
+    margin-bottom: 20px;
+}
+
+.hardware-select-title {
+    font-size: 2em;
+    font-weight: bold;
+    /* Style as needed */
+}
+
+.inputs-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.form-group {
+    width: calc(50% - 10px); /* Adjust width to fit two inputs side by side */
+    /* Style as needed */
+}
+
+.input-label {
+    /* Style your labels */
+}
+
+.input-field {
+    width: 100%;
+    /* Additional styles for input fields */
+}
+
+.submit-button {
+    margin-top: 20px;
+    /* Additional styles for submit button */
+}

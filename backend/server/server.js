@@ -1,27 +1,40 @@
 const express = require("express");
+const cors = require('cors');
 const app = express();
-const cors = require('cors')
-const loginRoute = require('./routes/userLogin')
-const getAllUsersRoute = require('./routes/userGetAllUsers')
-const registerRoute = require('./routes/userSignUp')
-const getUserByIdRoute = require('./routes/userGetUserById')
-const dbConnection = require('./config/db.config')
-const editUser = require('./routes/userEditUser')
-const deleteUser = require('./routes/userDeleteAll')
+const loginRoute = require('./routes/userLogin');
+const getAllUsersRoute = require('./routes/userGetAllUsers');
+const registerRoute = require('./routes/userSignUp');
+const getUserByIdRoute = require('./routes/userGetUserById');
+const dbConnection = require('./config/db.config');
+const editUser = require('./routes/userEditUser');
+const deleteUser = require('./routes/userDeleteAll');
+// Assuming HardwareDB.js exports a function named runImport for importing CSV data
+const { runImport } = require('./routes/HardwareDB');
 
 require('dotenv').config();
-const SERVER_PORT = 8081
+const SERVER_PORT = process.env.SERVER_PORT || 8081;
 
-dbConnection()
-app.use(cors({origin: '*'}))
-app.use(express.json())
-app.use('/user', loginRoute)
-app.use('/user', registerRoute)
-app.use('/user', getAllUsersRoute)
-app.use('/user', getUserByIdRoute)
-app.use('/user', editUser)
-app.use('/user', deleteUser)
+dbConnection();
+app.use(cors({origin: '*'}));
+app.use(express.json());
+app.use('/user', loginRoute);
+app.use('/user', registerRoute);
+app.use('/user', getAllUsersRoute);
+app.use('/user', getUserByIdRoute);
+app.use('/user', editUser);
+app.use('/user', deleteUser);
 
-app.listen(SERVER_PORT, (req, res) => {
+// Route to trigger hardware data import from CSV files
+app.get('/import-hardware-data', async (req, res) => {
+    try {
+        await runImport();
+        res.status(200).send({ message: "Hardware data import completed successfully." });
+    } catch (error) {
+        console.error("Import error:", error);
+        res.status(500).send({ message: "Error during data import." });
+    }
+});
+
+app.listen(SERVER_PORT, () => {
     console.log(`The backend service is running on port ${SERVER_PORT} and waiting for requests.`);
-})
+});

@@ -1,38 +1,38 @@
 const mongoose = require("mongoose");
 
 const cpuSchema = new mongoose.Schema({
-  type: {
+  Type: {
     type: String,
     required: true,
     label: "Type",
   },
-  brand: {
+  Brand: {
     type: String,
     required: true,
     label: "Brand",
   },
-  model: {
+  Model: {
     type: String,
     required: true,
     label: "Model",
   },
-  modelType: {
+  Model_Type: {
     type: String,
     required: true,
-    label: "Model Type",
+    default: 'N/A' // Default value if none is provided
   },
-  tier: {
+  Tier: {
     type: String,
-    required: true,
+    required: false,
     label: "Tier",
   },
-  processorNumber: {
+  Processor_Number: {
     type: String,
-    required: true,
-    label: "Processor Number",
+    required: false,
+    label: "Processor_Number",
   },
 }, {
-  collection: "cpus" // Specifying the collection name in the database
+  collection: "CPU" // Specifying the collection name in the database
 });
 
 module.exports = mongoose.model('CPU', cpuSchema);
