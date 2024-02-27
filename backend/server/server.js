@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
 const loginRoute = require('./routes/userLogin');
@@ -8,8 +9,11 @@ const getUserByIdRoute = require('./routes/userGetUserById');
 const dbConnection = require('./config/db.config');
 const editUser = require('./routes/userEditUser');
 const deleteUser = require('./routes/userDeleteAll');
+const hardwarePull = require('./routes/hardwarePull');
+const pcConfigSave = require('./routes/pcConfigSave');
 // Assuming HardwareDB.js exports a function named runImport for importing CSV data
 const { runImport } = require('./routes/HardwareDB');
+mongoose.connect('mongodb+srv://Archie:W33zz33r..@cluster0.6kqyush.mongodb.net/', { useNewUrlParser: true, useUnifiedTopology: true });
 
 require('dotenv').config();
 const SERVER_PORT = process.env.SERVER_PORT || 8081;
@@ -23,6 +27,11 @@ app.use('/user', getAllUsersRoute);
 app.use('/user', getUserByIdRoute);
 app.use('/user', editUser);
 app.use('/user', deleteUser);
+app.use('/user', pcConfigSave);
+
+// Other app.use() calls
+app.use('/user', hardwarePull);
+
 
 // Route to trigger hardware data import from CSV files
 app.get('/import-hardware-data', async (req, res) => {

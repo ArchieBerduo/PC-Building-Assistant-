@@ -13,22 +13,23 @@ const HomePage = () => {
 
   
   
-    return (
+      return (
         <div className="home-page-buttons">
           <button onClick={() => navigate('/privateUserProfile')}>
-            <img src='/profileIcon.png' alt="Profile" />
+            <img src='/profileIcon.png' alt="Profile" style={{ filter: 'invert(100%)' }} />
             <span>Profile</span>
           </button>
           <button onClick={() => navigate('/upgrade')}>
-            <img src='/upgradeIcon.png' alt="Upgrade" />
+            <img src='/upgradeIcon.png' alt="Upgrade" style={{ filter: 'invert(100%)' }} />
             <span>Upgrade</span>
           </button>
           <button onClick={handleLogout}>
-            <img src='/logoutIcon.png' alt="Logout" />
+            <img src='/logoutIcon.png' alt="Logout" style={{ filter: 'invert(100%)' }} />
             <span>Logout</span>
           </button>
         </div>
-      );
+    );
+    
     };
 
 export default HomePage

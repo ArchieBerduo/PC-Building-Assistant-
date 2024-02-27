@@ -21,7 +21,7 @@ export default function Navbar() {
   // we have an issue with getUserInfo() returning null after a few minutes
   // it seems.
   return (
-    <ReactNavbar bg="dark" variant="dark" className="vertical-navbar">
+    <ReactNavbar bg="dark" variant="dark" className="vertical-navbar custom-navbar">
       <Nav className="flex-column">
         {!onHomePage && <Nav.Link href="/">Start</Nav.Link>}
         {!onHomePage && <Nav.Link href="/privateUserProfile">Profile</Nav.Link>}

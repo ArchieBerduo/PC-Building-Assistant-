@@ -9,12 +9,38 @@
     align-items: center; /* Center content horizontally */
     justify-content: start; /* Align content to the top */
   }
-  
-  
-  .centered-content {
+  .left-aligned-text {
+    text-align: left;
+  }
+ 
+ntered-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
   }
+  .white-text {
+    color: #fff;
+  }
+  .logout-modal-button {
+    background-color: #2a2a2a !important; /* Forces the button to use the specified background color */
+    color: #ffffff; /* Adjusts the text color to white for visibility */
+    border: none !important; /* Removes the border */
+    margin-top: 30px; /* Lowers the button position by 10 pixels */
+    outline: none !important; /* Removes the outline on focus */
+  }
+
+  .logout-modal-button:hover {
+    animation: glow infinite;
+    transform: translateY(-5px);
+    box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.5);
+  }
   
+  @keyframes glow {
+    from {
+      filter: brightness(1) invert(0);
+    }
+    to {
+      filter: brightness(1.5) invert(1);
+    }
+  }

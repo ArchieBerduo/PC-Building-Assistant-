@@ -49,4 +49,41 @@ Content-Type: application/json
 }
 
 ###
+
+###
+GET  http://localhost:8081/user/getUserById
+Content-Type: application/json 
+
+{
+    "userId" : "65b87613e2e87d42e73e883f"
+}
+
+###
 POST  http://localhost:8081/user/deleteAll
+
+
+###
+GET http://localhost:8081/user/cpu
+Content-Type: application/json
+
+###
+
+GET http://localhost:8081/user/gpu
+Content-Type: application/json
+
+###
+
+GET http://localhost:8081/user/hdd
+Content-Type: application/json
+
+###
+
+GET http://localhost:8081/user/ssd
+Content-Type: application/json
+
+###
+
+GET http://localhost:8081/user/ram
+Content-Type: application/json
+
+###

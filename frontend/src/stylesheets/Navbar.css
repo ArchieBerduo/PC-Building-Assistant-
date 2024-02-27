@@ -1,19 +1,26 @@
 .vertical-navbar {
-    height: 100vh; /* Full height */
-    width: 75px; /* Set the width of the sidebar */
-    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
-    z-index: 1; /* Stay on top */
-    top: 0; /* Stay at the top */
-    left: 0;
-    overflow-x: hidden; /* Disable horizontal scroll */
-  }
-  .content {
-    margin-left: 75px; /* Same as the width of the sidebar */
-  }
-  .hidden {
-    display: none;
-  }
-  
-  .visible-navbar {
-    /* Your existing navbar styles */
-  }
+  width: 75px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1000; /* Ensure navbar is above other content */
+}
+
+nav.vertical-navbar.custom-navbar {
+  background-color: #4f90aa !important;
+}
+
+
+.content {
+  margin-left: 75px; /* Same as the width of the sidebar */
+}
+
+.hidden {
+  display: none;
+}
+
+.visible-navbar {
+  /* Your existing navbar styles */
+}

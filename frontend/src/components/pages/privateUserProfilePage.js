@@ -26,36 +26,23 @@ const PrivateUserProfile = () => {
   return (
     <div className="main-content"> {/* Apply the new CSS class */}
        <>
-            <div>
-                <h3>
-                    Welcome
-                    <span className='username'> @{username}</span>
-                </h3>
-                <h3>
-                    Your userId in mongo db is
-                    <span className='userId'> {id}</span>
-                </h3>
-                <h3>
-                    Your registered email is
-                    <span className='email'> {email}</span>
-                </h3>
-                <h3>
-                    Your password is
-                    <span className='password'> {password} ( hashed )</span>
-                </h3>
-            </div>
+       <div class="left-aligned-text">
+         <h3 className='white-text'> Username: <span className='username white-text'> @{username}</span> </h3>
+         <h3 className='white-text'> userId: <span className='userId white-text'> {id}</span> </h3>
+         <h3 className='white-text'> Email <span className='email white-text'> {email}</span> </h3>
+      </div>
           
         </>
-      <Button className="me-2" onClick={handleShow}>Log Out</Button>
-      <Modal
+      <Button className="logout-modal-button" onClick={handleShow}>Log Out</Button>
+      <Modal  
         show={show}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
       >
-        <Modal.Header closeButton>
-          <Modal.Title>Log Out</Modal.Title>
-        </Modal.Header>
+          <Modal.Header closeButton>
+            <Modal.Title>Log Out</Modal.Title>
+          </Modal.Header>
         <Modal.Body>Are you sure you want to Log Out?</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>

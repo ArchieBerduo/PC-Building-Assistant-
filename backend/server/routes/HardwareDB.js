@@ -9,6 +9,7 @@ const RAMType = require('../models/RAMType');
 const HDDType = require('../models/HDDType');
 const SSDType = require('../models/SSDType');
 
+
 const mongoURI = 'mongodb+srv://Archie:W33zz33r..@cluster0.6kqyush.mongodb.net/';
 
 //Corrected file paths and model mapping
@@ -179,11 +180,6 @@ const importRAMDataFromCsv = async (filePath, model) => {
     console.error('Error processing file:', filePath, error);
   }
 };
-
-
-
-
-
 
 // Example of calling the function for a GPU type
 // await importDataFromCsv('./path/to/gpu.csv', GPUType, 'GPU');

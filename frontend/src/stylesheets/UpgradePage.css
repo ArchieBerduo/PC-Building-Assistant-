@@ -1,37 +1,85 @@
 /* UpgradePage.css */
+body {
+  background-color: #2a2a2a !important; /* Match the grey from homePage.css */
+}
+
+/* Component selection */
 .component-selection {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-  }
-  
-  .component-form {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Three items per row */
-    gap: 10px;
-    width: 80%;
-    margin: auto;
-  }
-  
-  .form-row {
-    display: contents;
-  }
-  
-  label {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-  }
-  
-  select {
-    margin-top: 5px;
-    width: 100%; /* Make dropdowns longer */
-    /* Adjust the height if necessary */
-  }
-  
-  button {
-    grid-column: 1 / -1; /* Span the entire width */
-    cursor: pointer;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  width: 50%; /* Adjust width to make it smaller */
+  margin: 0 auto; /* Center the container */
+}
+
+/* Dropdown */
+.dropdown {
+  width: 100%; /* Maintain full width within the component-selection container */
+  /* Other styles remain unchanged */
+}
+
+/* Component form */
+.component-form {
+  width: 100%; /* Adjust to 100% of its parent's width, which has been set to 50% of the screen */
+  margin: auto;
+}
+
+/* Adjust form row if necessary to match new container sizes */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr; /* Maintain one column, adjust gap if needed */
+  gap: 10px;
+}
+/* Label */
+label {
+  margin-bottom: 10px;
+}
+
+/* Select */
+select {
+  margin-top: 5px;
+  width: 100%; /* Make dropdowns longer */
+  /* Adjust the height if necessary */
+}
+.dropdown {
+  width: 100%; /* Make dropdowns full width */
+}
+/* Button */
+button {
+  grid-column: 1 / -1; /* Span the entire width */
+  cursor: pointer;
+  background-color: #2a2a2a;
+  border: 1px solid #2a2a2a;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 10px;
+  margin: 10px;
+  color: white; /* Text color */
+}
+
+/* Button hover effect */
+.finished-button {
+  background-color: #2a2a2a; /* Background color for finished button */
+  color: white; /* Text color for finished button */
+  border: 1px solid #2a2a2a;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+/* Dropdown menu */
+.select-menu {
+  position: fixed; /* Fixed position */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  height: 100vh; /* Full height of the viewport */
+  background-color: #ffffff; /* Background color */
+  padding: 20px; /* Add padding */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Add shadow */
+  z-index: 999; /* Ensure it's on top */
+}
+.dropdown {
+  width: 100%;
+}

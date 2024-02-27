@@ -7,6 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from "./components/navbar";
 import LandingPage from "./components/pages/landingPage";
 import HomePage from "./components/pages/homePage";
+//import pcConfigurationSetup from "./components/pages/pcConfigurationSetup";
 import UpgradePage from "./components/pages/upgradePage";
 import Login from "./components/pages/loginPage";
 import Signup from "./components/pages/registerPage";

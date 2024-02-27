@@ -1,25 +1,82 @@
-/* HomePage.css */
+/* Reset margins and padding */
+body, html {
+  margin: 0;
+  padding: 0;
+  margin-top: 0;
+  height: 100%; /* Ensure body and html fill the viewport */
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+/* Ensure full height container for home page */
+.home-page-container {
+  min-height: 100vh; /* Use min-height to ensure full viewport height */
+  background-color: #2a2a2a;
+  overflow-x: hidden;
+  overflow-y: hidden;/* Hide overflow content */
+}
+
+/* Container to allow flex-grow */
+.grow-container {
+  flex-grow: 1;
+  background-color: #2a2a2a;
+}
+
+/* Styling for buttons on the home page */
 .home-page-buttons {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    height: 100vh; /* Adjust as needed to fit your design */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  min-height: calc(100vh - 75px); /* Adjust based on navbar height */
+}
+
+/* Styling for individual buttons */
+.home-page-buttons button {
+  background-color: #2a2a2a;
+  border: 1px solid #2a2a2a;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+/* Hover effect for buttons */
+.home-page-buttons button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.5);
+}
+
+/* Styling for button icons */
+.home-page-buttons button img {
+  width: 150px;
+  height: auto;
+}
+
+/* Styling for button text */
+.home-page-buttons button span {
+  display: block;
+  margin-top: 8px;
+  color: white;
+}
+
+/* Glow effect for button icons on hover */
+.home-page-buttons button:hover img {
+  animation: glow infinite;
+}
+
+@keyframes glow {
+  from {
+    filter: brightness(1) invert(0);
   }
-  
-  .home-page-buttons button {
-    background: none;
-    border: none;
-    text-align: center;
-    cursor: pointer;
+  to {
+    filter: brightness(1.5) invert(1);
   }
-  
-  .home-page-buttons button img {
-    width: 150px; /* Adjusted to three times the original size */
-    height: auto;
-  }
-  
-  .home-page-buttons button span {
-    display: block;
-    margin-top: 8px;
-  }
-  
+}
+
+/* Reset margins and padding for header and footer */
+header, footer {
+  margin: 0;
+  padding: 0;
+}
