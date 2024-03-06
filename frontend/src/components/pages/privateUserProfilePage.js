@@ -31,7 +31,7 @@ const PrivateUserProfile = () => {
     }
 
     try {
-      const response = await axios.get('http://localhost:8081/user/pcConfiguration');
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/pcConfiguration`);
       if (!response.data) {
         throw new Error('No PC configurations found');
       }

@@ -65,7 +65,7 @@ const PcConfigurationSetup = () => { // Rename function to start with uppercase 
     };
 
     // Endpoint URL
-    const url = 'http://localhost:8081/user/saveComponents';
+    const url = `${process.env.REACT_APP_BACKEND_URL}/user/saveComponents`;
 
     // Use axios to send a POST request with the modified payload
     axios.post(url, payload)

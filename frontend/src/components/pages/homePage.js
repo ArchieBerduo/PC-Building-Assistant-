@@ -22,7 +22,8 @@ const HomePage = () => {
     
       try {
         // Fetch PC configurations from the server
-        const response = await axios.get('http://localhost:8081/user/pcConfigPull');
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/pcConfigPull`);
+
         if (!response.data) {
           throw new Error('No PC configurations found');
         }
