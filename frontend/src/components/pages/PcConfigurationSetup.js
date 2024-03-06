@@ -24,11 +24,11 @@ const PcConfigurationSetup = () => { // Rename function to start with uppercase 
     const fetchData = async () => {
       try {
         const [cpusResponse, gpusResponse, hddsResponse, ssdsResponse, ramResponse] = await Promise.all([
-          axios.get('http://localhost:8081/user/cpu'),
-          axios.get('http://localhost:8081/user/gpu'),
-          axios.get('http://localhost:8081/user/hdd'),
-          axios.get('http://localhost:8081/user/ssd'),
-          axios.get('http://localhost:8081/user/ram')
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/cpu`),
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/gpu`),
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/hdd`),
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/ssd`),
+          axios.get(`${process.env.REACT_APP_BACKEND_URL}/user/ram`)
         ]);
 
         setCpus(cpusResponse.data);
