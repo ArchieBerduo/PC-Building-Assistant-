@@ -1,46 +1,173 @@
 /* MainContentLayout.css */
-/* MainContentLayout.css */
 .main-content {
-    margin-right: 450px; /* Adjust to match the sidebar width */
-    padding-top: 20px; /* Space from the top */
-    flex-grow: 1; /* Take up remaining space */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Center content horizontally */
-    justify-content: start; /* Align content to the top */
-  }
-  .left-aligned-text {
-    text-align: left;
-  }
- 
-ntered-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: start;
-  }
-  .white-text {
-    color: #fff;
-  }
-  .logout-modal-button {
-    background-color: #2a2a2a !important; /* Forces the button to use the specified background color */
-    color: #ffffff; /* Adjusts the text color to white for visibility */
-    border: none !important; /* Removes the border */
-    margin-top: 30px; /* Lowers the button position by 10 pixels */
-    outline: none !important; /* Removes the outline on focus */
-  }
+  margin-right: 450px; /* Adjust to match the sidebar width */
+  padding-top: 20px; /* Space from the top */
+  flex-grow: 1; /* Take up remaining space */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align content to the top left */
+  justify-content: flex-start; /* Align content to the top */
+  position: relative; /* Set position to relative for absolute positioning */
+}
 
-  .logout-modal-button:hover {
-    animation: glow infinite;
-    transform: translateY(-5px);
-    box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.5);
+.profile-heading {
+  font-size: 60px; /* Increase font size by 20% */
+  position: relative; /* Make it positioned relative to its normal position */
+  left: 20px; /* Move it 20px to the left */
+  top: -35px; /* Move it 10px up */
+}
+
+.left-aligned-text {
+  text-align: left;
+}
+
+.white-text {
+  color: #fff;
+}
+
+.username,
+.email {
+  margin-left: 40px; /* Move username and email 40px to the right */
+}
+
+.logout-modal-button {
+  background-color: #2a2a2a !important; /* Forces the button to use the specified background color */
+  color: #ffffff; /* Adjusts the text color to white for visibility */
+  border: none !important; /* Removes the border */
+  margin-top: 20px; /* Adjust top margin for button */
+  padding: 10px 20px; /* Increase button padding */
+  position: absolute; /* Set position to absolute for absolute positioning */
+  top: 20px; /* Adjust top position */
+  right: 0; /* Align the button to the right */
+  z-index: 1; /* Ensure button appears above other content */
+  cursor: pointer; /* Add cursor pointer on hover */
+}/* MainContentLayout.css */
+
+.main-content {
+  margin-right: 450px; /* Adjust to match the sidebar width */
+  padding-top: 20px; /* Space from the top */
+  flex-grow: 1; /* Take up remaining space */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align content to the top left */
+  justify-content: flex-start; /* Align content to the top */
+  position: relative; /* Set position to relative for absolute positioning */
+}
+
+.profile-heading {
+  font-size: 60px; /* Increase font size by 20% */
+  position: relative; /* Make it positioned relative to its normal position */
+  left: 20px; /* Move it 20px to the left */
+  top: -35px; /* Move it 10px up */
+}
+
+.left-aligned-text {
+  text-align: left;
+}
+
+.white-text {
+  color: #fff;
+}
+
+.username,
+.email {
+  margin-left: 40px; /* Move username and email 40px to the right */
+}
+
+.logout-modal-button {
+  background-color: #2a2a2a !important; /* Forces the button to use the specified background color */
+  color: #ffffff; /* Adjusts the text color to white for visibility */
+  border: none !important; /* Removes the border */
+  margin-top: 20px; /* Adjust top margin for button */
+  padding: 10px 20px; /* Increase button padding */
+  position: absolute; /* Set position to absolute for absolute positioning */
+  top: 20px; /* Adjust top position */
+  right: 0; /* Align the button to the right */
+  z-index: 1; /* Ensure button appears above other content */
+  cursor: pointer; /* Add cursor pointer on hover */
+}
+
+.logout-modal-button:hover {
+  animation: glow infinite;
+  transform: translateY(-5px);
+  box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes glow {
+  from {
+    filter: brightness(1) invert(0);
   }
-  
-  @keyframes glow {
-    from {
-      filter: brightness(1) invert(0);
-    }
-    to {
-      filter: brightness(1.5) invert(1);
-    }
+  to {
+    filter: brightness(1.5) invert(1);
   }
+}
+
+
+.logout-modal-button:hover {
+  animation: glow infinite;
+  transform: translateY(-5px);
+  box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.5);
+}
+
+@keyframes glow {
+  from {
+    filter: brightness(1) invert(0);
+  }
+  to {
+    filter: brightness(1.5) invert(1);
+  }
+}
+
+.pc-config-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  position: relative; /* Necessary for absolute positioning */
+}
+
+.pc-config-card {
+  width: calc(33.33% - 20px); /* 33.33% width for each card with 20px margin */
+  margin-bottom: 20px; /* Bottom margin between rows */
+}
+
+@media (max-width: 1200px) {
+  .pc-config-card {
+    width: calc(50% - 20px); /* 50% width for each card with 20px margin on smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .pc-config-card {
+    width: calc(100% - 20px); /* 100% width for each card with 20px margin on even smaller screens */
+  }
+}
+.add-config-button {
+  width: 150px;
+  height: 300px;
+  background-color: #2a2a2a !important; /* Ensure background color is applied */
+  border: 1px solid #2a2a2a !important; /* Ensure border color is applied */
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  position: absolute; /* Ensure it maintains its position */
+  top: 230px; /* Adjust top position */
+  right: -60px; /* Adjust right position */
+}
+
+.add-config-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.5);
+}
+
+.add-config-button img {
+  width: 100px; /* Adjust width as needed */
+  height: auto;
+}
+
+.add-config-button span {
+  display: block;
+  margin-top: 8px;
+}

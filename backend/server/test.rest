@@ -87,3 +87,12 @@ GET http://localhost:8081/user/ram
 Content-Type: application/json
 
 ###
+GET http://localhost:8081/user/pcConfigPull
+Content-Type: application/json
+
+###
+
+GET http://localhost:8081/user/pcConfiguration
+Content-Type: application/json
+
+###

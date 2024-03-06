@@ -7,8 +7,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import Navbar from "./components/navbar";
 import LandingPage from "./components/pages/landingPage";
 import HomePage from "./components/pages/homePage";
-//import pcConfigurationSetup from "./components/pages/pcConfigurationSetup";
-import UpgradePage from "./components/pages/upgradePage";
+import PcConfigurationSetup from "./components/pages/PcConfigurationSetup";
 import Login from "./components/pages/loginPage";
 import Signup from "./components/pages/registerPage";
 import PrivateUserProfile from "./components/pages/privateUserProfilePage";
@@ -37,7 +36,7 @@ const App = () => {
         <Routes>
           <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/home" element={<HomePage />} />
-          <Route exact path="/upgrade" element={<UpgradePage />} />
+          <Route exact path= "/configure" element={<PcConfigurationSetup />} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />

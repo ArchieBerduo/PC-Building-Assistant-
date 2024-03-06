@@ -7,6 +7,7 @@ const GPU = require('../models/GPUType');
 const HDD = require('../models/HDDType');
 const SSD = require('../models/SSDType');
 const RAM = require('../models/RAMType');
+const pcConfig = require('../models/userPc');
 
 // CPU Endpoint to retrieve CPU data from MongoDB
 router.get('/cpu', async (req, res) => {
@@ -73,4 +74,34 @@ router.get('/ram', async (req, res) => {
         return res.status(500).json({ error: "Error fetching RAM models." });
     }
 });
+
+router.get('/pcConfigPull', async (req, res) => {
+    try {
+        // Query MongoDB to retrieve only the Model field
+        const pcconfigurations = await pcConfig.find({}, 'email username');
+
+        // Return the retrieved HDD models
+        return res.json(pcconfigurations);
+    } catch (error) {
+        console.error("Error fetching Pc configuration:", error);
+        return res.status(500).json({ error: "Error fetching Pc configuration." });
+    }
+});
+
+router.get('/pcConfiguration', async (req, res) => {
+    try {
+        // Query MongoDB to retrieve all specified fields
+        const FullPC = await pcConfig.find({}, 'email username cpu gpu ram hdd ssd');
+
+        // Debugging: Log the retrieved PC configurations
+        console.log("Retrieved PC Configurations:", FullPC);
+
+        // Return the retrieved PC configurations
+        return res.json(FullPC);
+    } catch (error) {
+        console.error("Error fetching PC configuration:", error);
+        return res.status(500).json({ error: "Error fetching PC configuration." });
+    }
+});
+
 module.exports = router;

@@ -83,3 +83,40 @@ button {
 .dropdown {
   width: 100%;
 }
+
+.upgrade-page-container {
+  /* Your existing styles */
+}
+.upgrade-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* Adjust the gap between buttons */
+}
+
+.upgrade-buttons-container {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: center; /* Center buttons horizontally */
+  justify-content: center; /* Center buttons vertically */
+  height: 100%; /* Full height */
+}
+
+/* Styling for individual upgrade buttons */
+.upgrade-buttons-container button {
+  background-color: #2a2a2a;
+  border: 1px solid #2a2a2a;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  color: white; /* Ensure text color is white */
+}
+
+/* Hover effect for upgrade buttons */
+.upgrade-buttons-container button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}

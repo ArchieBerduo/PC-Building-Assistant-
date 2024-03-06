@@ -24,9 +24,9 @@ export default function Navbar() {
     <ReactNavbar bg="dark" variant="dark" className="vertical-navbar custom-navbar">
       <Nav className="flex-column">
         {!onHomePage && <Nav.Link href="/">Start</Nav.Link>}
+        {!onHomePage && <Nav.Link href ="/configure">configure</Nav.Link>}
         {!onHomePage && <Nav.Link href="/privateUserProfile">Profile</Nav.Link>}
-        {!onHomePage && <Nav.Link href="/upgrade">Upgrade</Nav.Link>}
-        {!onHomePage && <Nav.Link href="/preference">Preference</Nav.Link>}
+        {!onHomePage && <Nav.Link href="/preference">upgradePreference</Nav.Link>}
         {!onHomePage && <Nav.Link href="/upgradeSelection">Selection</Nav.Link>}
         {/* Always show the Home link */}
         <Nav.Link href="/home">Home</Nav.Link>
