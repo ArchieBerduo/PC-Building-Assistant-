@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "server": "nodemon server.js",
-    "build":"npm i"
+    "build": "npm i"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,6 @@
     "zod": "^3.19.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.22"
   }
 }
