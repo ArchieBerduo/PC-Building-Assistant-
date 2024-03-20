@@ -171,3 +171,37 @@
   display: block;
   margin-top: 8px;
 }
+.pc-config-card {
+  width: 150px; /* Adjust width as needed */
+  height: 300px; /* Adjust height as needed */
+  background-color: #2a2a2a !important; /* Ensure background color is applied */
+  border: 1px solid #2a2a2a !important; /* Ensure border color is applied */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0); /* Initial box shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
+  padding: 10px; /* Padding around content */
+  cursor: pointer; /* Change cursor to pointer to indicate clickable */
+  color: white; /* Text color */
+  /* Remove absolute positioning if it doesn't fit the layout of .pc-config-card */
+}
+
+.pc-config-card:hover {
+  transform: translateY(-5px); /* Move up slightly on hover */
+  box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.5); /* Glow effect on hover */
+}
+
+/* If .pc-config-card contains img or span elements that need styling */
+.pc-config-card img {
+  width: 100px; /* Adjust width as needed, consider if this applies to your card */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.pc-config-card span {
+  display: block; /* Ensure span is block level for layout */
+  margin-top: 8px; /* Space above span */
+}
+.pc-config-card:focus {
+  outline: none;
+  /* Optional: Add an alternative focus style for accessibility */
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); /* Example: subtle white glow */
+}

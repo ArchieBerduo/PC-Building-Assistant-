@@ -61,6 +61,7 @@ const PrivateUserProfile = () => {
         <div className="pc-config-container">
          {pcConfigurations.map((config, index) => (
             <Button key={index} className="pc-config-card" style={{ width: '400px', height: '400px' }} onClick={() => navigate("/preference", { state: { selectedConfig: config } })}>
+            {/* Button contents */}
               <Card style={{ backgroundColor: '#2a2a2a', color: '#fff', width: '100%', height: '100%' }}>
               <Card.Body>
               <Card.Title>PC Configuration {index + 1}</Card.Title>
