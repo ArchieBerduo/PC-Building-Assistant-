@@ -10,15 +10,15 @@ const recommendationSchema = new mongoose.Schema({
         required: true
     },
     recommendation: [{
-        Model: {
+        model: { // Changed from Model to model
             type: String,
             required: true
         },
-        Benchmark: {
+        benchmark: { // Changed from Benchmark to benchmark
             type: Number,
             required: true
         },
-        Increase: {
+        increase: { // Changed from Increase to increase
             type: Number,
             required: true
         }

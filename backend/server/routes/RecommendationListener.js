@@ -5,31 +5,26 @@ const Recommendation = require('../models/Recommendation'); // Path to your Mong
 router.use(express.json());
 
 router.post('/receive-recommendation', async (req, res) => {
-    const { model, component_type, recommendation } = req.body;
+    let { model, component_type, recommendation } = req.body;
 
-    // Validation to ensure the received data has the expected structure
     if (!model || !component_type || !recommendation) {
         return res.status(400).send({ error: 'Invalid recommendation format' });
     }
 
-    // Log the received recommendation
-    console.log(`Received recommendation for Model: ${model}, Component Type: ${component_type}`);
-
-    recommendation.forEach((rec, index) => {
-        console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
-        console.log(`- Model: ${rec.Model}`);
-        console.log(`- Benchmark: ${rec.Benchmark}`);
-    });
+    // Transform the recommendation items to match the schema
+    recommendation = recommendation.map(rec => ({
+        Model: rec.model,
+        Benchmark: rec.benchmark,
+        Increase: rec.increase
+    }));
 
     try {
-        // Create a new recommendation document
         const newRecommendation = new Recommendation({
             model,
             component_type,
             recommendation
         });
 
-        // Save the new recommendation to the database
         await newRecommendation.save();
         
         res.status(200).send('Recommendation processed successfully');
