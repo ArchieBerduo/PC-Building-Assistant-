@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const Recommendation = require('../models/Recommendation'); // Path to your Mongoose model
 
 router.use(express.json());
 
-// Initialize an in-memory store
-let recommendationsStore = {};
-
-router.post('/receive-recommendation', (req, res) => {
+router.post('/receive-recommendation', async (req, res) => {
     const { model, component_type, recommendation } = req.body;
 
     // Validation to ensure the received data has the expected structure
@@ -19,16 +17,27 @@ router.post('/receive-recommendation', (req, res) => {
 
     recommendation.forEach((rec, index) => {
         console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
-        console.log(`- Model: ${rec.Details.Model}`);
-        console.log(`- Benchmark: ${rec.Details.Benchmark}`);
+        console.log(`- Model: ${rec.Model}`);
+        console.log(`- Benchmark: ${rec.Benchmark}`);
     });
 
-    // Replace or set the new recommendation in the in-memory store
-    // Using a composite key of model and component_type to uniquely identify a recommendation
-    const key = `${model}_${component_type}`;
-    recommendationsStore[key] = recommendation;
+    try {
+        // Create a new recommendation document
+        const newRecommendation = new Recommendation({
+            model,
+            component_type,
+            recommendation
+        });
 
-    res.status(200).send('Recommendation processed successfully');
+        // Save the new recommendation to the database
+        await newRecommendation.save();
+        
+        res.status(200).send('Recommendation processed successfully');
+    } catch (error) {
+        console.error("Error saving recommendation:", error);
+        res.status(500).send('Internal server error');
+    }
 });
 
 module.exports = router;
+
