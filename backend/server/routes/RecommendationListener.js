@@ -1,28 +1,33 @@
 const express = require('express');
 const router = express.Router();
-const Recommendation = require('../models/Recommendation'); // Path to your Mongoose model
+const Recommendation = require('../models/Recommendation'); // Correct path to your model
 
 router.use(express.json());
 
 router.post('/receive-recommendation', async (req, res) => {
-    let { model, component_type, recommendation } = req.body;
+    const { model, component_type, recommendation } = req.body;
 
+    // Ensure the received data has the expected structure
     if (!model || !component_type || !recommendation) {
         return res.status(400).send({ error: 'Invalid recommendation format' });
     }
 
-    // Transform the recommendation items to match the schema
-    recommendation = recommendation.map(rec => ({
-        Model: rec.model,
-        Benchmark: rec.benchmark,
-        Increase: rec.increase
-    }));
+    // No need to transform if your incoming data already matches this structure
+    console.log(`Received recommendation for Model: ${model}, Component Type: ${component_type}`);
+
+    // Directly logging the received recommendations for debug purpose
+    recommendation.forEach((rec, index) => {
+        console.log(`Recommendation #${index + 1} for ${rec.increase}% increase:`);
+        console.log(`- Model: ${rec.model}`);
+        console.log(`- Benchmark: ${rec.benchmark}`);
+    });
 
     try {
+        // Create and save the new recommendation document as is
         const newRecommendation = new Recommendation({
             model,
             component_type,
-            recommendation
+            recommendation // Assuming this already matches the expected array structure
         });
 
         await newRecommendation.save();
@@ -35,4 +40,3 @@ router.post('/receive-recommendation', async (req, res) => {
 });
 
 module.exports = router;
-
