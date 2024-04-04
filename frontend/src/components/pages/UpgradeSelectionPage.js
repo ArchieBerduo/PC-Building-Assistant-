@@ -10,27 +10,29 @@ const UpgradeSelectionPage = () => {
     });
 
     useEffect(() => {
-        const fetchRecommendations = async () => {
-            try {
-                const response = await fetch('/receive-recommendation');
-                const data = await response.json();
-
-                // Assuming the API returns data in an array and you need to map it to your state
-                // Adjust this logic based on how your data is structured
-                const mappedRecommendations = data.reduce((acc, rec) => {
-                    // Example: assuming rec has a 'category' key that could be 'costEfficient', 'balance', or 'premium'
-                    acc[rec.category] = rec.details; // 'details' should contain the string or object you want to display
-                    return acc;
-                }, {...recommendations});
-
-                setRecommendations(mappedRecommendations);
-            } catch (error) {
-                console.error("Failed to fetch recommendations:", error);
-            }
-        };
-
-        fetchRecommendations();
-    }, []);
+      const fetchRecommendations = async () => {
+          try {
+              // Ensure the correct endpoint, considering the full URL if needed
+              const response = await fetch('/recommendations/receive-recommendation');
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              const data = await response.json();
+  
+              const mappedRecommendations = data.reduce((acc, rec) => {
+                  acc[rec.category] = rec.details;
+                  return acc;
+              }, {...recommendations});
+  
+              setRecommendations(mappedRecommendations);
+          } catch (error) {
+              console.error("Failed to fetch recommendations:", error);
+              // Consider setting an error state and displaying it to the user
+          }
+      };
+  
+      fetchRecommendations();
+  }, []);
 
     return (
         <div className="upgrade-selection-page">
