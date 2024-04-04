@@ -2,48 +2,48 @@ import '../../stylesheets/UpgradeSelectionPage.css';
 import React, { useEffect, useState } from 'react';
 
 const UpgradeSelectionPage = () => {
-  // State to store recommendations
-  const [recommendations, setRecommendations] = useState({
-    costEfficient: '',
-    balance: '',
-    premium: '',
-  });
+    // Initialize the recommendations state with keys for each category
+    const [recommendations, setRecommendations] = useState({
+        costEfficient: '',
+        balance: '',
+        premium: '',
+    });
 
-  useEffect(() => {
-    // Fetch recommendations when the component mounts
-    const fetchRecommendations = async () => {
-      try {
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/recommendations`);
-        if (!response.ok) throw new Error('Failed to fetch recommendations');
-        const data = await response.json();
-        setRecommendations({
-          costEfficient: data.costEfficient,
-          balance: data.balance,
-          premium: data.premium,
-        });
-      } catch (error) {
-        console.error("Error fetching recommendations:", error);
-      }
-    };
+    useEffect(() => {
+        const fetchRecommendations = async () => {
+            try {
+                const response = await fetch('/api/recommendations/latest-recommendation');
+                const data = await response.json();
 
-    fetchRecommendations();
-  }, []); // Empty dependency array means this effect runs once on mount
+                // Assuming the API returns data in an array and you need to map it to your state
+                // Adjust this logic based on how your data is structured
+                const mappedRecommendations = data.reduce((acc, rec) => {
+                    // Example: assuming rec has a 'category' key that could be 'costEfficient', 'balance', or 'premium'
+                    acc[rec.category] = rec.details; // 'details' should contain the string or object you want to display
+                    return acc;
+                }, {...recommendations});
 
-  return (
-    <div className="upgrade-selection-page">
-      <h1 className="title">CPU</h1>
-      <div className="boxes-container">
-        <input className="sub-title-box cost-efficient" placeholder="Cost Efficient" value={recommendations.costEfficient} readOnly />
-        <input className="sub-title-box balance" placeholder="Balance" value={recommendations.balance} readOnly />
-        <input className="sub-title-box premium" placeholder="Premium" value={recommendations.premium} readOnly />
-      </div>
-      <div className="boxes-container">
-        <input className="text-box cost-efficient" placeholder="Cost Efficient" value={recommendations.costEfficient} readOnly />
-        <input className="text-box balance" placeholder="Balance" value={recommendations.balance} readOnly />
-        <input className="text-box premium" placeholder="Premium" value={recommendations.premium} readOnly />
-      </div>
-    </div>
-  );
+                setRecommendations(mappedRecommendations);
+            } catch (error) {
+                console.error("Failed to fetch recommendations:", error);
+            }
+        };
+
+        fetchRecommendations();
+    }, []);
+
+    return (
+        <div className="upgrade-selection-page">
+            <h1 className="title">Upgrade Recommendations</h1>
+            <div className="boxes-container">
+                {/* Display each category with its corresponding recommendations */}
+                <input className="sub-title-box cost-efficient" placeholder="Cost Efficient" value={recommendations.costEfficient} readOnly />
+                <input className="sub-title-box balance" placeholder="Balance" value={recommendations.balance} readOnly />
+                <input className="sub-title-box premium" placeholder="Premium" value={recommendations.premium} readOnly />
+            </div>
+            {/* Optionally, you can add more detailed text boxes for each category below, similar to your current structure */}
+        </div>
+    );
 };
 
 export default UpgradeSelectionPage;

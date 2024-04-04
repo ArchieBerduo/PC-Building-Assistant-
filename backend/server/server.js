@@ -11,6 +11,8 @@ const editUser = require('./routes/userEditUser');
 const deleteUser = require('./routes/userDeleteAll');
 const hardwarePull = require('./routes/hardwarePull');
 const pcConfigSave = require('./routes/pcConfigSave');
+const recommendationRouter = require('./routes/RecommendationListener');
+
 // Assuming HardwareDB.js exports a function named runImport for importing CSV data
 const { runImport } = require('./routes/HardwareDB');
 
@@ -35,6 +37,9 @@ app.use('/user', pcConfigSave);
 // Other app.use() calls
 app.use('/user', hardwarePull);
 
+app.use('/recommendations', recommendationRouter);
+
+
 // Route to trigger hardware data import from CSV files
 app.get('/import-hardware-data', async (req, res) => {
     try {
@@ -45,30 +50,6 @@ app.get('/import-hardware-data', async (req, res) => {
         res.status(500).send({ message: "Error during data import." });
     }
 });
-
-app.post('/receive-recommendation', async (req, res) => {
-    try {
-        const { model, component_type, recommendation } = req.body;
-
-        // Optional: Save the recommendation to your MongoDB
-        const newRecommendation = new Recommendation({
-            model,
-            component_type,
-            recommendation
-        });
-
-        await newRecommendation.save();
-
-        console.log("Recommendation received and processed:", req.body);
-        // Send a response back to acknowledge receipt
-        res.status(200).json({ message: "Recommendation processed successfully." });
-    } catch (error) {
-        console.error("Error processing recommendation:", error);
-        res.status(500).json({ message: "Error processing recommendation." });
-    }
-});
-
-
 
 
 app.listen(SERVER_PORT, () => {

@@ -44,6 +44,7 @@ const UpgradePreferencePage = () => {
   const navigate = useNavigate(); // Updated to useNavigate
 
 
+
 const handleInputChange = (event) => {
   const { name, value } = event.target;
 
@@ -69,8 +70,8 @@ const handleInputChange = (event) => {
 const handleSubmit = async (event) => {
   event.preventDefault();
 
+  // Your existing form submission logic here...
   const selectedComponentModel = selectedConfig ? selectedConfig[hardwareType.toLowerCase()] : null;
-
   const payload = {
     model: selectedComponentModel,
     type: hardwareType,
@@ -82,25 +83,24 @@ const handleSubmit = async (event) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      mode: 'cors', // Added to handle CORS policy
+      mode: 'cors',
       body: JSON.stringify(payload),
     });
 
-    console.log('Response Status:', response.status); // Log the response status
-
     if (!response.ok) {
-      // Attempt to read the response body even in case of an error
       const errorResponse = await response.text();
       throw new Error(`Network response was not ok: ${response.status} - ${errorResponse}`);
     }
 
     const data = await response.json();
     console.log('Success:', data);
+
+    // Navigate to UpgradeSelectionPage after successful submission
+    navigate('/upgradeSelection');
   } catch (error) {
     console.error('Error:', error);
   }
 };
-
 
   return (
         <div className="container">
