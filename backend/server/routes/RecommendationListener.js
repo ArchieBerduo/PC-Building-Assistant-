@@ -20,15 +20,20 @@ router.post('/receive-recommendation', async (req, res) => {
             console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
             console.log(`- Model: ${rec.Details.Model}`);
             console.log(`- Benchmark: ${rec.Details.Benchmark}`);
-});
-
+        });
 
         // Create and save new recommendation documents in the database
-        await Recommendation.create({
-            model,
-            componentType: component_type,
-            recommendations: recommendation
-        });
+        for (const rec of recommendation) {
+            await Recommendation.create({
+                model,
+                componentType: component_type,
+                recommendations: {
+                    model: rec.Details.Model,
+                    benchmark: rec.Details.Benchmark,
+                    Increase: rec.Increase
+                }
+            });
+        }
 
         // Send success response
         res.status(200).send('Recommendation processed successfully');
