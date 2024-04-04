@@ -6,24 +6,23 @@ const UpgradeSelectionPage = () => {
     const [recommendations, setRecommendations] = useState([]);
 
     useEffect(() => {
-        const fetchRecommendations = async () => {
-            try {
-                const response = await fetch('/recommendations/receive-recommendation');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                console.log("Received data:", data); // Log to inspect the received data
-
-                setRecommendations(data.recommendations || []);
-            } catch (error) {
-                console.error("Failed to fetch recommendations:", error);
-            }
-        };
-
-        fetchRecommendations();
-    }, []);
-
+      const fetchRecommendations = async () => {
+          try {
+              const response = await fetch('/recommendations/latest-recommendations');
+              if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+              }
+              const data = await response.json();
+              console.log("Received data:", data); // Log to inspect the received data
+  
+              setRecommendations(data || []);
+          } catch (error) {
+              console.error("Failed to fetch latest recommendations:", error);
+          }
+      };
+  
+      fetchRecommendations();
+  }, []);
     return (
         <div className="upgrade-selection-page">
             <h1 className="title">Upgrade Recommendations</h1>
