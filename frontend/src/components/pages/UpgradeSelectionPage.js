@@ -12,7 +12,7 @@ const UpgradeSelectionPage = () => {
     useEffect(() => {
         const fetchRecommendations = async () => {
             try {
-                const response = await fetch('/api/recommendations/latest-recommendation');
+                const response = await fetch('/receive-recommendation');
                 const data = await response.json();
 
                 // Assuming the API returns data in an array and you need to map it to your state
