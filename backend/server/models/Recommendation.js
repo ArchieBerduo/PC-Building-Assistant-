@@ -18,7 +18,7 @@ const recommendationSchema = new mongoose.Schema({
             type: Number,
             required: true
         },
-        increase: {
+        Increase: {
             type: Number,
             required: true
         }
