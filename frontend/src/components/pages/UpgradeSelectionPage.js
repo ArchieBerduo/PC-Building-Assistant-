@@ -8,7 +8,7 @@ const UpgradeSelectionPage = () => {
     useEffect(() => {
         const fetchRecommendations = async () => {
             try {
-                const response = await fetch('/recommendations/latest-recommendations');
+                const response = await fetch('/latest-recommendations/latest-recommendations');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
