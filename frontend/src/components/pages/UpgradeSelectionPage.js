@@ -4,14 +4,17 @@ import React, { useEffect, useState } from 'react';
 const UpgradeSelectionPage = () => {
   // Initialize the recommendations state as an array
   const [recommendations, setRecommendations] = useState([]);
-
+  
   useEffect(() => {
     const fetchRecommendations = async () => {
         try {
             const response = await fetch('/recommendations/receive-recommendation');
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
+            console.log("Received data:", data); // Log to inspect the received data
 
-            // Directly set the fetched data assuming it's in the correct format
             setRecommendations(data.recommendations || []);
         } catch (error) {
             console.error("Failed to fetch recommendations:", error);
@@ -20,7 +23,6 @@ const UpgradeSelectionPage = () => {
 
     fetchRecommendations();
 }, []);
-
   return (
     <div className="upgrade-selection-page">
         <h1 className="title">Upgrade Recommendations</h1>
