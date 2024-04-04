@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Recommendation = require('../models/Recommendation'); // Correct path to your model
 
 router.use(express.json());
 
-router.post('/receive-recommendation', async (req, res) => {
+router.post('/receive-recommendation', (req, res) => {
     const { model, component_type, recommendation } = req.body;
 
     // Ensure the received data has the expected structure
@@ -22,21 +21,7 @@ router.post('/receive-recommendation', async (req, res) => {
         console.log(`- Benchmark: ${rec.benchmark}`);
     });
 
-    try {
-        // Create and save the new recommendation document as is
-        const newRecommendation = new Recommendation({
-            model,
-            component_type,
-            recommendation // Assuming this already matches the expected array structure
-        });
-
-        await newRecommendation.save();
-        
-        res.status(200).send('Recommendation processed successfully');
-    } catch (error) {
-        console.error("Error saving recommendation:", error);
-        res.status(500).send('Internal server error');
-    }
+    res.status(200).send('Recommendation received and logged successfully');
 });
 
 module.exports = router;
