@@ -1,28 +1,34 @@
-// Import necessary libraries
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser');
-// Assume processRecommendation is a function you'll use to process the recommendation
-const { processRecommendation } = require('../utilities/RecommendationProcessor'); // Adjust the path as necessary
 
-// Middleware to parse JSON bodies
-router.use(bodyParser.json());
+router.use(express.json());
 
-// Define the endpoint for receiving recommendations
+// Initialize an in-memory store
+let recommendationsStore = {};
+
 router.post('/receive-recommendation', (req, res) => {
-    const recommendation = req.body;
-    
-    // Check if the recommendation object is valid
-    if (recommendation && recommendation.model && recommendation.component_type && recommendation.recommendation) {
-        // Process the recommendation
-        processRecommendation(recommendation);
+    const { model, component_type, recommendation } = req.body;
 
-        // Respond to acknowledge receipt and processing of the recommendation
-        res.status(200).send({message: "Recommendation received and processed."});
-    } else {
-        // Handle invalid recommendation format
-        res.status(400).send({error: "Invalid recommendation format."});
+    // Validation to ensure the received data has the expected structure
+    if (!model || !component_type || !recommendation) {
+        return res.status(400).send({ error: 'Invalid recommendation format' });
     }
+
+    // Log the received recommendation
+    console.log(`Received recommendation for Model: ${model}, Component Type: ${component_type}`);
+
+    recommendation.forEach((rec, index) => {
+        console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
+        console.log(`- Model: ${rec.Details.Model}`);
+        console.log(`- Benchmark: ${rec.Details.Benchmark}`);
+    });
+
+    // Replace or set the new recommendation in the in-memory store
+    // Using a composite key of model and component_type to uniquely identify a recommendation
+    const key = `${model}_${component_type}`;
+    recommendationsStore[key] = recommendation;
+
+    res.status(200).send('Recommendation processed successfully');
 });
 
 module.exports = router;
