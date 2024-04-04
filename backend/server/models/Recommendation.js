@@ -5,24 +5,26 @@ const recommendationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    component_type: {
+    componentType: {
         type: String,
         required: true
     },
-    recommendation: [{
-        model: { // Changed from Model to model
+    recommendations: [{
+        model: {
             type: String,
             required: true
         },
-        benchmark: { // Changed from Benchmark to benchmark
+        benchmark: {
             type: Number,
             required: true
         },
-        increase: { // Changed from Increase to increase
+        increase: {
             type: Number,
             required: true
         }
-    }],
+    }]
 }, { timestamps: true });
 
-module.exports = mongoose.model('Recommendation', recommendationSchema);
+const Recommendation = mongoose.model('Recommendation', recommendationSchema);
+
+module.exports = Recommendation;

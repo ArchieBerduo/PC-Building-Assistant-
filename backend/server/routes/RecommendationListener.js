@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const Recommendation = require('../models/Recommendation'); // Import the Recommendation model
 
 router.use(express.json());
 
-// Initialize an in-memory store
-let recommendationsStore = {};
-
-router.post('/receive-recommendation', (req, res) => {
+router.post('/receive-recommendation', async (req, res) => {
     const { model, component_type, recommendation } = req.body;
 
     // Validation to ensure the received data has the expected structure
@@ -14,21 +12,31 @@ router.post('/receive-recommendation', (req, res) => {
         return res.status(400).send({ error: 'Invalid recommendation format' });
     }
 
-    // Log the received recommendation
-    console.log(`Received recommendation for Model: ${model}, Component Type: ${component_type}`);
+    try {
+        // Log the received recommendation
+        console.log(`Received recommendation for Model: ${model}, Component Type: ${component_type}`);
 
-    recommendation.forEach((rec, index) => {
-        console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
-        console.log(`- Model: ${rec.Details.Model}`);
-        console.log(`- Benchmark: ${rec.Details.Benchmark}`);
-    });
+        // Iterate over each recommendation and log details
+        recommendation.forEach((rec, index) => {
+            console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
+            console.log(`- Model: ${rec.model}`);
+            console.log(`- Benchmark: ${rec.benchmark}`);
+        });
 
-    // Replace or set the new recommendation in the in-memory store
-    // Using a composite key of model and component_type to uniquely identify a recommendation
-    const key = `${model}_${component_type}`;
-    recommendationsStore[key] = recommendation;
+        // Create and save new recommendation documents in the database
+        await Recommendation.create({
+            model,
+            componentType: component_type,
+            recommendations: recommendation
+        });
 
-    res.status(200).send('Recommendation processed successfully');
+        // Send success response
+        res.status(200).send('Recommendation processed successfully');
+    } catch (error) {
+        // Handle errors
+        console.error('Error saving recommendation:', error);
+        res.status(500).send('Internal server error');
+    }
 });
 
 module.exports = router;
