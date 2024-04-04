@@ -16,12 +16,12 @@ router.post('/receive-recommendation', async (req, res) => {
         // Log the received recommendation
         console.log(`Received recommendation for Model: ${model}, Component Type: ${component_type}`);
 
-        // Iterate over each recommendation and log details
-        recommendation.forEach((rec, index) => {
-            console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
-            console.log(`- Model: ${rec.model}`);
-            console.log(`- Benchmark: ${rec.benchmark}`);
-        });
+recommendation.forEach((rec, index) => {
+    console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
+    console.log(`- Model: ${rec.Details.Model}`);
+    console.log(`- Benchmark: ${rec.Details.Benchmark}`);
+});
+
 
         // Create and save new recommendation documents in the database
         await Recommendation.create({
