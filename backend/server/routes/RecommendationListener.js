@@ -16,10 +16,10 @@ router.post('/receive-recommendation', async (req, res) => {
         // Log the received recommendation
         console.log(`Received recommendation for Model: ${model}, Component Type: ${component_type}`);
 
-recommendation.forEach((rec, index) => {
-    console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
-    console.log(`- Model: ${rec.Details.Model}`);
-    console.log(`- Benchmark: ${rec.Details.Benchmark}`);
+        recommendation.forEach((rec, index) => {
+            console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
+            console.log(`- Model: ${rec.Details.Model}`);
+            console.log(`- Benchmark: ${rec.Details.Benchmark}`);
 });
 
 
