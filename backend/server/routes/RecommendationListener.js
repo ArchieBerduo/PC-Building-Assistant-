@@ -8,12 +8,12 @@ router.post('/receive-recommendation', async (req, res) => {
     const { model, component_type, recommendation } = req.body;
 
     // Ensure the received data has the expected structure
-    if (!model || !component_type || !recommendation) {
+    if (!model || !component_type || !recommendation || !Array.isArray(recommendation)) {
         return res.status(400).send({ error: 'Invalid recommendation format' });
     }
 
-    // No need to transform if your incoming data already matches this structure
-    console.log(`Received recommendation for Model: ${model}, Component Type: ${component_type}`);
+    // Log the received data for debugging
+    console.log("Received data:", req.body);
 
     // Directly logging the received recommendations for debug purpose
     recommendation.forEach((rec, index) => {
