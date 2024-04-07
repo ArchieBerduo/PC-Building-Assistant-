@@ -12,7 +12,7 @@ const deleteUser = require('./routes/userDeleteAll');
 const hardwarePull = require('./routes/hardwarePull');
 const pcConfigSave = require('./routes/pcConfigSave');
 const recommendationRouter = require('./routes/RecommendationListener');
-const latestRecommendationsRouter = require('./routes/latestRecommendationsRouter');
+const pullRecommendations = require('./routes/pullRecommendations');
 
 
 // Assuming HardwareDB.js exports a function named runImport for importing CSV data
@@ -41,7 +41,8 @@ app.use('/user', hardwarePull);
 
 app.use('/recommendations', recommendationRouter);
 
-app.use('/latest-recommendations', latestRecommendationsRouter);
+app.use(express.json()); // Middleware to parse JSON bodies
+app.use('/pullRecommendations', pullRecommendations);
 
 
 // Route to trigger hardware data import from CSV files

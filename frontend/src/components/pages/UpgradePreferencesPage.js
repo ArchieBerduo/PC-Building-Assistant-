@@ -96,7 +96,7 @@ const handleSubmit = async (event) => {
     console.log('Success:', data);
 
     // Navigate to UpgradeSelectionPage after successful submission
-    navigate('/upgradeSelection');
+    navigate('/upgradeSelection', { state: { payload } });
   } catch (error) {
     console.error('Error:', error);
   }
