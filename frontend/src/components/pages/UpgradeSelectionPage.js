@@ -10,37 +10,39 @@ const UpgradeSelectionPage = () => {
 
     useEffect(() => {
         console.log("Received payload:", payload);
-        const fetchRecommendations = async () => {
-            try {
-                // Directly include model and componentType in the URL
 
-                // Fetch data using axios
+        const fetchRecommendations = async () => {
+            if (!payload || !payload.model || !payload.componentType) {
+                console.log("Payload is incomplete:", payload);
+                return;
+            }
+
+            try {
+                // Constructing the URL with payload details included in the query parameters
                 const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}`);
-    
-                // Log received data for debugging
+                
                 console.log("Received data from pullRecommendations:", response.data);
-    
-                // Update state with the fetched data
+                
+                if (!response.data || response.data.length === 0) {
+                    throw new Error('No recommendations found');
+                }
+                
                 setRecommendations(response.data);
             } catch (error) {
-                // Log any errors and set recommendations to an empty array to indicate no data was found
                 console.error("Failed to fetch recommendations:", error.response ? error.response.data : error.message);
-                setRecommendations([]);
+                setRecommendations([]); // Set to an empty array on error
             }
         };
-    
-        // Trigger data fetch if the necessary payload data is available
-        if (payload && payload.model && payload.componentType) {
-            fetchRecommendations();
-        }
+
+        fetchRecommendations();
     }, [payload]); 
+
     return (
         <div className="upgrade-selection-page">
             <h1 className="title">Upgrade Recommendations</h1>
-            {/* Conditional rendering based on the state of the recommendations */}
             {recommendations === null ? (
                 <p>Loading recommendations...</p>
-            ) : recommendations.length ? (
+            ) : recommendations.length > 0 ? (
                 <div>
                     {recommendations.map((rec, index) => (
                         <div key={index} className="recommendation-box">
@@ -59,5 +61,4 @@ const UpgradeSelectionPage = () => {
 };
 
 export default UpgradeSelectionPage;
-
 
