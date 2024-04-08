@@ -11,17 +11,15 @@ const UpgradeSelectionPage = () => {
     useEffect(() => {
         const fetchRecommendations = async () => {
             try {
-                // Construct the query string from payload
-                const queryString = `model=${encodeURIComponent(payload.model)}&componentType=${encodeURIComponent(payload.componentType)}`;
-                // Construct the full URL including the environment-specific backend URL
-                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?${queryString}`;
-
+                // Directly include model and componentType in the URL
+                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}`;
+    
                 // Fetch data using axios
                 const response = await axios.get(url);
-
+    
                 // Log received data for debugging
                 console.log("Received data from pullRecommendations:", response.data);
-
+    
                 // Update state with the fetched data
                 setRecommendations(response.data);
             } catch (error) {
@@ -30,13 +28,12 @@ const UpgradeSelectionPage = () => {
                 setRecommendations([]);
             }
         };
-
+    
         // Trigger data fetch if the necessary payload data is available
         if (payload && payload.model && payload.componentType) {
             fetchRecommendations();
         }
-    }, [payload]); // Rerun effect if payload changes
-
+    }, [payload]); 
     return (
         <div className="upgrade-selection-page">
             <h1 className="title">Upgrade Recommendations</h1>
