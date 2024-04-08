@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 import '../../stylesheets/UpgradeSelectionPage.css';
 
 const UpgradeSelectionPage = () => {
@@ -10,18 +11,14 @@ const UpgradeSelectionPage = () => {
     useEffect(() => {
         const fetchRecommendations = async () => {
             try {
+                // Use process.env.REACT_APP_BACKEND_URL to dynamically set the backend URL
                 const queryString = `model=${encodeURIComponent(payload.model)}&componentType=${encodeURIComponent(payload.componentType)}`;
-                const response = await fetch(`/pullRecommendations?${queryString}`, {
-                    method: 'GET',
-                });
+                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?${queryString}`;
+                const response = await axios.get(url);
 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                setRecommendations(data);
+                setRecommendations(response.data);
             } catch (error) {
-                console.error("Failed to fetch recommendations:", error);
+                console.error("Failed to fetch recommendations:", error.response ? error.response.data : error.message);
             }
         };
 
@@ -52,3 +49,4 @@ const UpgradeSelectionPage = () => {
 };
 
 export default UpgradeSelectionPage;
+

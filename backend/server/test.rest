@@ -100,6 +100,4 @@ Content-Type: application/json
 GET http://localhost:8081/pullRecommendations?componentType=CPU&model=Core%20i3-10100F
 Content-Type: application/json 
 
-
-
 ###

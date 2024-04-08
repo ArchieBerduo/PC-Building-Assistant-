@@ -1,23 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const Recommendation = require('../models/Recommendation'); // Adjust the path according to your structure
+const Recommendation = require('../models/Recommendation');
 
-// Define the GET endpoint directly with all logic inside
 router.get('/', async (req, res) => {
-    const { componentType, model } = req.query; // Assuming these are passed as query parameters
+    const { componentType, model } = req.query;
 
     try {
-        // Query directly using componentType and model, adjusting to the new structure
-        const recommendations = await Recommendation.find({
-            componentType: componentType,
-            model: model // Query based on the current model
-        })
-        // Assuming Increase is still a relevant sorting criterion
-        .sort({'Increase': -1}) // Adjust sorting based on the new document structure
-        .limit(3); // Limit to the top 3 recommendations
+        // Array to hold promises for each Increase value query
+        const increaseValues = [15, 30, 45];
+        const queries = increaseValues.map(increase => 
+            Recommendation.findOne({
+                componentType: componentType,
+                model: model,
+                Increase: increase
+            })
+        );
+
+        // Execute all queries in parallel
+        const recommendations = await Promise.all(queries);
+
+        // Filter out any null results (in case a specific Increase value isn't found)
+        const validRecommendations = recommendations.filter(rec => rec !== null);
 
         // Respond with the fetched recommendations
-        res.json(recommendations);
+        res.json(validRecommendations);
     } catch (error) {
         console.error('Error fetching recommendations:', error);
         res.status(500).send('Server error');
