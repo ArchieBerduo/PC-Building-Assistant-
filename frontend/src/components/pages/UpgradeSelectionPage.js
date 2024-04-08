@@ -8,28 +8,26 @@ const UpgradeSelectionPage = () => {
     const { payload } = location.state || {}; // Extract the payload
 
     useEffect(() => {
-      const fetchRecommendations = async () => {
-        try {
-            // Adjusted queryString to use payload.componentType instead of payload.type
-            const queryString = `model=${encodeURIComponent(payload.model)}&componentType=${encodeURIComponent(payload.componentType)}`;
-    
-            const response = await fetch(`/pullRecommendations?${queryString}`, {
-                method: 'GET',
-            });
-    
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+        const fetchRecommendations = async () => {
+            try {
+                const queryString = `model=${encodeURIComponent(payload.model)}&componentType=${encodeURIComponent(payload.componentType)}`;
+                const response = await fetch(`/pullRecommendations?${queryString}`, {
+                    method: 'GET',
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                setRecommendations(data);
+            } catch (error) {
+                console.error("Failed to fetch recommendations:", error);
             }
-            const data = await response.json();
-            setRecommendations(data);
-        } catch (error) {
-            console.error("Failed to fetch recommendations:", error);
+        };
+
+        if (payload && payload.model && payload.componentType) {
+            fetchRecommendations();
         }
-      };
-      
-      if (payload && payload.model && payload.componentType) { // Check for both model and componentType
-          fetchRecommendations();
-      }
     }, [payload]); // Re-fetch recommendations if payload changes
 
     return (
@@ -39,9 +37,10 @@ const UpgradeSelectionPage = () => {
                 <div>
                     {recommendations.map((rec, index) => (
                         <div key={index} className="recommendation-box">
-                            <p>Recommendation #{index + 1} for {rec.Increase}% increase:</p>
-                            <p>- Model: {rec.new_model}</p> {/* Adjusted to rec.new_model */}
+                            <p>Recommendation #{index + 1}</p>
+                            <p>- New Model: {rec.new_model}</p>
                             <p>- Benchmark: {rec.benchmark}</p>
+                            <p>- Increase: {rec.Increase}%</p>
                         </div>
                     ))}
                 </div>
