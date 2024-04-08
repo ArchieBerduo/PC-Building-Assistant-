@@ -9,6 +9,7 @@ const UpgradeSelectionPage = () => {
     const { payload } = location.state || {}; // Ensure payload is defined or default to an empty object
 
     useEffect(() => {
+        console.log("Received payload:", payload);
         const fetchRecommendations = async () => {
             try {
                 // Directly include model and componentType in the URL
