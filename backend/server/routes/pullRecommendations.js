@@ -7,12 +7,13 @@ router.get('/', async (req, res) => {
     const { componentType, model } = req.query; // Assuming these are passed as query parameters
 
     try {
-        // Directly perform the query within the route handler
+        // Query directly using componentType and model, adjusting to the new structure
         const recommendations = await Recommendation.find({
             componentType: componentType,
-            model: model // Include both componentType and model in the query
+            model: model // Query based on the current model
         })
-        .sort({'recommendations.Increase': -1}) // Sort by Increase in descending order
+        // Assuming Increase is still a relevant sorting criterion
+        .sort({'Increase': -1}) // Adjust sorting based on the new document structure
         .limit(3); // Limit to the top 3 recommendations
 
         // Respond with the fetched recommendations
