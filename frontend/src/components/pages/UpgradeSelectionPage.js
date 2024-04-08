@@ -12,10 +12,9 @@ const UpgradeSelectionPage = () => {
         const fetchRecommendations = async () => {
             try {
                 // Directly include model and componentType in the URL
-                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}`;
-    
+
                 // Fetch data using axios
-                const response = await axios.get(url);
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}`);
     
                 // Log received data for debugging
                 console.log("Received data from pullRecommendations:", response.data);
