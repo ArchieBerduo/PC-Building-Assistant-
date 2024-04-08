@@ -15,6 +15,10 @@ const UpgradeSelectionPage = () => {
                 const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?${queryString}`;
                 
                 const response = await axios.get(url);
+                
+                // Log the data received from the pullRecommendations endpoint
+                console.log("Received data from pullRecommendations:", response.data);
+                
                 // Directly set recommendations, could be empty array or filled
                 setRecommendations(response.data);
             } catch (error) {
@@ -22,11 +26,12 @@ const UpgradeSelectionPage = () => {
                 setRecommendations([]); // Set to empty array on error
             }
         };
-
+    
         if (payload && payload.model && payload.componentType) {
             fetchRecommendations();
         }
     }, [payload]);
+    
 
     return (
         <div className="upgrade-selection-page">
