@@ -27,11 +27,10 @@ router.post('/receive-recommendation', async (req, res) => {
             await Recommendation.create({
                 model,
                 componentType: component_type,
-                recommendations: {
-                    model: rec.Details.Model,
-                    benchmark: rec.Details.Benchmark,
-                    Increase: rec.Increase
-                }
+                new_model: rec.Details.Model,
+                benchmark: rec.Details.Benchmark,
+                Increase: rec.Increase
+                
             });
         }
 

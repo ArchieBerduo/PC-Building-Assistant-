@@ -11,30 +11,25 @@ const UpgradeSelectionPage = () => {
     const { payload } = location.state || {}; // Extract the payload
 
     useEffect(() => {
-        const fetchRecommendations = async () => {
-            try {
-              const response = await fetch('/latest-recommendations', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                // Include both model and type in the payload
-                body: JSON.stringify({
-                  model: payload.model, // Assuming payload.model contains the model
-                  type: payload.type, // Assuming payload.type contains the hardware type
-                }),
-              });
-          
-              if (!response.ok) {
+      const fetchRecommendations = async () => {
+        try {
+            // Construct the query string
+            const queryString = `model=${encodeURIComponent(payload.model)}&componentType=${encodeURIComponent(payload.type)}`;
+    
+            const response = await fetch(`/pullRecommendations?${queryString}`, {
+                method: 'GET', // Change to GET
+            });
+    
+            if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
-              }
-              const data = await response.json();
-              console.log("Received data:", data);
-              setRecommendations(data || []);
-            } catch (error) {
-              console.error("Failed to fetch latest recommendations:", error);
             }
-          };
+            const data = await response.json();
+            console.log("Received data:", data);
+            setRecommendations(data || []);
+        } catch (error) {
+            console.error("Failed to fetch recommendations:", error);
+        }
+    };
           
 
         // Call fetchRecommendations with the model type from the payload, if available

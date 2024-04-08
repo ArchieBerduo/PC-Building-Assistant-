@@ -41,7 +41,6 @@ app.use('/user', hardwarePull);
 
 app.use('/recommendations', recommendationRouter);
 
-app.use(express.json()); // Middleware to parse JSON bodies
 app.use('/pullRecommendations', pullRecommendations);
 
 

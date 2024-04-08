@@ -1,33 +1,26 @@
-// latestRecommendationsRouter.js
 const express = require('express');
 const router = express.Router();
-const Recommendation = require('../models/Recommendation');
+const Recommendation = require('../models/Recommendation'); // Adjust the path according to your structure
 
-router.get('/pullRecommendations', async (req, res) => {
-    const { componentType, model } = req.query;
-
-    // Validate componentType
-    if (!componentTypeToModel[componentType]) {
-        return res.status(400).json({ error: "Invalid component type provided." });
-    }
+// Define the GET endpoint directly with all logic inside
+router.get('/', async (req, res) => {
+    const { componentType, model } = req.query; // Assuming these are passed as query parameters
 
     try {
-        // Select the correct model based on componentType
-        const Model = componentTypeToModel[componentType];
+        // Directly perform the query within the route handler
+        const recommendations = await Recommendation.find({
+            componentType: componentType,
+            model: model // Include both componentType and model in the query
+        })
+        .sort({'recommendations.Increase': -1}) // Sort by Increase in descending order
+        .limit(3); // Limit to the top 3 recommendations
 
-        // Construct query based on model presence
-        const query = model ? { model } : {};
-
-        // Fetch recommendations
-        const recommendations = await Model.find(query, 'model recommendations');
-
-        // Return the recommendations
-        return res.json(recommendations);
+        // Respond with the fetched recommendations
+        res.json(recommendations);
     } catch (error) {
-        console.error(`Error fetching ${componentType} recommendations:`, error);
-        return res.status(500).json({ error: `Error fetching ${componentType} recommendations.` });
+        console.error('Error fetching recommendations:', error);
+        res.status(500).send('Server error');
     }
 });
 
 module.exports = router;
-

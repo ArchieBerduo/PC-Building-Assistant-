@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Define the schema
 const recommendationSchema = new mongoose.Schema({
     model: {
         type: String,
@@ -9,22 +10,23 @@ const recommendationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    recommendations: [{
-        model: {
-            type: String,
-            required: true
-        },
-        benchmark: {
-            type: Number,
-            required: true
-        },
-        Increase: {
-            type: Number,
-            required: true
-        }
-    }]
-}, { timestamps: true });
+ 
+    new_model: {
+        type: String,
+        required: true
+    },
+    benchmark: {
+        type: Number,
+        required: true
+    },
+    Increase: { // Consider changing "Increase" to "increase" to follow JavaScript naming conventions
+        type: Number,
+        required: true
+    }
+    
+}, { 
+    collection: "Recommendations" // Specify the collection name if different from the default
+});
 
-const Recommendation = mongoose.model('Recommendation', recommendationSchema);
-
-module.exports = Recommendation;
+// Export the model
+module.exports = mongoose.model('Recommendation', recommendationSchema);
