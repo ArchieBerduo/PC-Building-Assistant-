@@ -4,41 +4,45 @@ import axios from 'axios';
 import '../../stylesheets/UpgradeSelectionPage.css';
 
 const UpgradeSelectionPage = () => {
-    const [recommendations, setRecommendations] = useState(null); // Initialize to null
+    const [recommendations, setRecommendations] = useState(null); // Initialize to null to differentiate from empty response
     const location = useLocation();
-    const { payload } = location.state || {}; 
+    const { payload } = location.state || {}; // Ensure payload is defined or default to an empty object
 
     useEffect(() => {
         const fetchRecommendations = async () => {
             try {
+                // Construct the query string from payload
                 const queryString = `model=${encodeURIComponent(payload.model)}&componentType=${encodeURIComponent(payload.componentType)}`;
+                // Construct the full URL including the environment-specific backend URL
                 const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?${queryString}`;
-                
+
+                // Fetch data using axios
                 const response = await axios.get(url);
-                
-                // Log the data received from the pullRecommendations endpoint
+
+                // Log received data for debugging
                 console.log("Received data from pullRecommendations:", response.data);
-                
-                // Directly set recommendations, could be empty array or filled
+
+                // Update state with the fetched data
                 setRecommendations(response.data);
             } catch (error) {
+                // Log any errors and set recommendations to an empty array to indicate no data was found
                 console.error("Failed to fetch recommendations:", error.response ? error.response.data : error.message);
-                setRecommendations([]); // Set to empty array on error
+                setRecommendations([]);
             }
         };
-    
+
+        // Trigger data fetch if the necessary payload data is available
         if (payload && payload.model && payload.componentType) {
             fetchRecommendations();
         }
-    }, [payload]);
-    
+    }, [payload]); // Rerun effect if payload changes
 
     return (
         <div className="upgrade-selection-page">
             <h1 className="title">Upgrade Recommendations</h1>
-            {/* Check for null to ensure fetch was attempted */}
+            {/* Conditional rendering based on the state of the recommendations */}
             {recommendations === null ? (
-                <p>Loading recommendations...</p> // Or any other loading state representation
+                <p>Loading recommendations...</p>
             ) : recommendations.length ? (
                 <div>
                     {recommendations.map((rec, index) => (
@@ -58,4 +62,5 @@ const UpgradeSelectionPage = () => {
 };
 
 export default UpgradeSelectionPage;
+
 
