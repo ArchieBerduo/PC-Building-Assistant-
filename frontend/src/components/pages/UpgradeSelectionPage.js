@@ -1,42 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom'; // Import useLocation
+import { useLocation } from 'react-router-dom';
 import '../../stylesheets/UpgradeSelectionPage.css';
 
 const UpgradeSelectionPage = () => {
-    // Initialize the recommendations state as an array
     const [recommendations, setRecommendations] = useState([]);
-
-    // Access the navigation state
     const location = useLocation();
     const { payload } = location.state || {}; // Extract the payload
 
     useEffect(() => {
       const fetchRecommendations = async () => {
         try {
-            // Construct the query string
-            const queryString = `model=${encodeURIComponent(payload.model)}&componentType=${encodeURIComponent(payload.type)}`;
+            // Adjusted queryString to use payload.componentType instead of payload.type
+            const queryString = `model=${encodeURIComponent(payload.model)}&componentType=${encodeURIComponent(payload.componentType)}`;
     
             const response = await fetch(`/pullRecommendations?${queryString}`, {
-                method: 'GET', // Change to GET
+                method: 'GET',
             });
     
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             const data = await response.json();
-            console.log("Received data:", data);
-            setRecommendations(data || []);
+            setRecommendations(data);
         } catch (error) {
             console.error("Failed to fetch recommendations:", error);
         }
-    };
-          
-
-        // Call fetchRecommendations with the model type from the payload, if available
-        if (payload && payload.model) {
-            fetchRecommendations(payload.model);
-        }
-    }, [payload]); // Depend on the payload so this effect runs when the payload changes
+      };
+      
+      if (payload && payload.model && payload.componentType) { // Check for both model and componentType
+          fetchRecommendations();
+      }
+    }, [payload]); // Re-fetch recommendations if payload changes
 
     return (
         <div className="upgrade-selection-page">
@@ -45,8 +39,8 @@ const UpgradeSelectionPage = () => {
                 <div>
                     {recommendations.map((rec, index) => (
                         <div key={index} className="recommendation-box">
-                            <p>Recommendation #{index + 1} for {rec.increase} increase:</p>
-                            <p>- Model: {rec.model}</p>
+                            <p>Recommendation #{index + 1} for {rec.Increase}% increase:</p>
+                            <p>- Model: {rec.new_model}</p> {/* Adjusted to rec.new_model */}
                             <p>- Benchmark: {rec.benchmark}</p>
                         </div>
                     ))}
