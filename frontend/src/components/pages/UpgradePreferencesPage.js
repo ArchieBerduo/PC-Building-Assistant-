@@ -74,7 +74,7 @@ const handleSubmit = async (event) => {
   const selectedComponentModel = selectedConfig ? selectedConfig[hardwareType.toLowerCase()] : null;
   const payload = {
     model: selectedComponentModel,
-    type: hardwareType,
+    componentType: hardwareType,
   };
 
   try {
