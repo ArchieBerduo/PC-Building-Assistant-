@@ -12,11 +12,6 @@ const UpgradeSelectionPage = () => {
         console.log("Received payload:", payload);
 
         const fetchRecommendations = async () => {
-            if (!payload || !payload.model || !payload.componentType) {
-                console.log("Payload is incomplete:", payload);
-                return;
-            }
-
             try {
                 // Constructing the URL with payload details included in the query parameters
                 const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}`);
@@ -35,7 +30,7 @@ const UpgradeSelectionPage = () => {
         };
 
         fetchRecommendations();
-    }, [payload]); 
+    }, [payload]); // Dependency on payload ensures fetchRecommendations is called when payload changes
 
     return (
         <div className="upgrade-selection-page">
@@ -61,4 +56,3 @@ const UpgradeSelectionPage = () => {
 };
 
 export default UpgradeSelectionPage;
-
