@@ -5,11 +5,20 @@ const Recommendation = require('../models/Recommendation'); // Import the Recomm
 router.use(express.json());
 
 router.post('/receive-recommendation', async (req, res) => {
-    const { model, component_type, recommendation, UserId, email } = req.body;
+    const { model, component_type, recommendation } = req.body;
 
-    // Updated validation to include UserId and email
-    if (!model || !component_type || !recommendation || !UserId || !email) {
-        return res.status(400).send({ error: 'Invalid recommendation format, missing required information' });
+    // Assuming the middleware adds a user object to req
+    // Check if user is authenticated and user details are available
+    if (!req.user || !req.user.UserId || !req.user.email) {
+        return res.status(401).send({ error: 'Unauthorized: User details not found.' });
+    }
+
+    // Extract UserId and email from authenticated user's details
+    const { UserId, email } = req.user;
+
+    // Validate other request body contents
+    if (!model || !component_type || !recommendation) {
+        return res.status(400).send({ error: 'Invalid recommendation format, missing required information.' });
     }
 
     try {
