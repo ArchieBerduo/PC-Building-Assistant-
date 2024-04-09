@@ -20,11 +20,13 @@ const UpgradeSelectionPage = () => {
                 
                 console.log("Received data from pullRecommendations:", response.data);
                 
-                if (!response.data || response.data.length === 0) {
+                // Checking if the data exists and has at least one recommendation
+                if (response.data && response.data.length > 0) {
+                    setRecommendations(response.data);
+                } else {
+                    // If the data is not as expected, throw an error to trigger the catch block
                     throw new Error('No recommendations found');
                 }
-                
-                setRecommendations(response.data);
             } catch (error) {
                 console.error("Failed to fetch recommendations:", error); // Log the entire error object
                 setRecommendations([]); // Set to an empty array on error
@@ -32,7 +34,7 @@ const UpgradeSelectionPage = () => {
         };
     
         fetchRecommendations();
-    }, [payload]); // Dependency on payload ensures fetchRecommendations is called when payload changes
+    }, [payload]);
     
     return (
         <div className="upgrade-selection-page">
