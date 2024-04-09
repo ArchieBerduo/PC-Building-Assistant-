@@ -22,6 +22,9 @@ router.get('/', async (req, res) => {
         // Filter out any null results (in case a specific Increase value isn't found)
         const validRecommendations = recommendations.filter(rec => rec !== null);
 
+        // Log the valid recommendations to the console
+        console.log('Fetched Recommendations:', validRecommendations);
+
         // Respond with the fetched recommendations
         res.json(validRecommendations);
     } catch (error) {
