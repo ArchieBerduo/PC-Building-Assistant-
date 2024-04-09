@@ -14,10 +14,16 @@ const UpgradePreferencePage = () => {
     });
   
     const location = useLocation();
+    const navigate = useNavigate(); // Updated to useNavigate
     const { selectedConfig } = location.state || {};
 
+     // Redirect the user to the configuration selection page if no configuration is selected
+     useEffect(() => {
+      if (!selectedConfig) {
+          navigate('/chooseConfig'); // Adjust the route as necessary
+      }
+  }, [navigate, selectedConfig]); // Dependencies array includes navigate and selectedConfig
 
-    
   //const hardwareFields = {
     //CPU: [
       //{ name: 'performance', label: 'What is the desired Performance (%)?', type: 'dropdown', options: ['Select','15%', '30%', '45%'] },
@@ -41,7 +47,7 @@ const UpgradePreferencePage = () => {
    // ],
  // };
 
-  const navigate = useNavigate(); // Updated to useNavigate
+ 
 
 
 
