@@ -1,40 +1,49 @@
 const express = require('express');
 const router = express.Router();
 const Recommendation = require('../models/Recommendation'); // Import the Recommendation model
-//saves recommendation to the DB from the cloud
+
 router.use(express.json());
 
 router.post('/receive-recommendation', async (req, res) => {
     const { model, component_type, recommendation } = req.body;
-    let UserId = null;
-    let email = null;
-
-    // If user details are available (i.e., through some authentication middleware), use them
-    if (req.user && req.user.UserId && req.user.email) {
-        UserId = req.user.UserId;
-        email = req.user.email;
-    }
 
     if (!model || !component_type || !recommendation) {
-        return res.status(400).send({ error: 'Invalid recommendation format, missing required information.' });
+        return res.status(400).send({ error: 'Invalid recommendation format' });
     }
 
     try {
-        // Process each recommendation
-        for (const rec of recommendation) {
-            // Check for an existing recommendation
-            const query = { model, componentType: component_type, new_model: rec.Details.Model, benchmark: rec.Details.Benchmark, Increase: rec.Increase };
-            if (UserId && email) { // Add user details to the query if available
-                Object.assign(query, { UserId, email });
-            }
+        console.log(`Received recommendation for Model: ${model}, Component Type: ${component_type}`);
 
-            const existingRecommendation = await Recommendation.findOne(query);
+        recommendation.forEach((rec, index) => {
+            console.log(`Recommendation #${index + 1} for ${rec.Increase} increase:`);
+            console.log(`- Model: ${rec.Details.Model}`);
+            console.log(`- Benchmark: ${rec.Details.Benchmark}`);
+        });
+
+        for (const rec of recommendation) {
+            // Check if a recommendation with the same attributes already exists
+            const existingRecommendation = await Recommendation.findOne({
+                model,
+                componentType: component_type,
+                new_model: rec.Details.Model,
+                benchmark: rec.Details.Benchmark,
+                Increase: rec.Increase
+            });
 
             if (!existingRecommendation) {
-                const newRec = Object.assign({ model, componentType: component_type, new_model: rec.Details.Model, benchmark: rec.Details.Benchmark, Increase: rec.Increase }, UserId && email ? { UserId, email } : {});
-                await Recommendation.create(newRec);
+                // If it does not exist, create and save the new recommendation document
+                await Recommendation.create({
+                    model,
+                    componentType: component_type,
+                    new_model: rec.Details.Model,
+                    benchmark: rec.Details.Benchmark,
+                    Increase: rec.Increase
+                });
             } else {
+                // Optional: Update the existing document or take some other action
                 console.log('Duplicate recommendation detected, skipping...');
+                // Example: Update existing document
+                // await existingRecommendation.updateOne({ /* new data */ });
             }
         }
 
@@ -44,6 +53,7 @@ router.post('/receive-recommendation', async (req, res) => {
         res.status(500).send('Internal server error');
     }
 });
+
 
 
 module.exports = router;
