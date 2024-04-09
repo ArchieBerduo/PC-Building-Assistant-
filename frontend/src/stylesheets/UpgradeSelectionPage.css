@@ -41,3 +41,48 @@
     border: 1px solid #000;
     text-align: center;
 }
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Full height of the viewport */
+  }
+  .boxes-container {
+    display: flex;
+    flex-direction: row; /* Arrange children side by side */
+    justify-content: center; /* Center children horizontally */
+    align-items: center; /* Center children vertically */
+    flex-wrap: wrap; /* Allow items to wrap to next line on smaller screens */
+    gap: 10px; /* Optional: Adds space between boxes */
+  }
+
+.recommendation-box {
+   width: 150px; /* Adjust width as needed */
+  height: auto; /* Let height adjust based on content */
+    background-color: #2a2a2a; /* Dark background color */
+    color: white; /* Text color */
+    border: 1px solid #2a2a2a; /* Border color to match the background */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Subtle box shadow for depth */
+    padding: 10px; /* Padding around content */
+    cursor: pointer; /* Change cursor to pointer to indicate clickable */
+    margin: 5px; /* Spacing between each box */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions for hover effects */
+    display: flex; /* Use flexbox for internal layout */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center children vertically */
+    align-items: center; /* Center children horizontally */
+    text-align: center; /* Center text */
+  }
+  
+  .recommendation-box:hover {
+    transform: translateY(-5px); /* Move up slightly on hover */
+    box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.5); /* Enhanced glow effect on hover */
+  }
+  
+  /* Adjustments for mobile responsiveness */
+  @media (max-width: 768px) {
+    .recommendation-box {
+      width: calc(100% - 20px); /* Full width on smaller screens, minus some padding */
+    }
+  }
