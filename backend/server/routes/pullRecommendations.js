@@ -3,6 +3,9 @@ const router = express.Router();
 const Recommendation = require('../models/Recommendation');
 
 router.get('/', async (req, res) => {
+    // Log the incoming request URL and query parameters
+    console.log('Incoming request for recommendations with query:', req.query);
+
     const { componentType, model } = req.query;
 
     try {
