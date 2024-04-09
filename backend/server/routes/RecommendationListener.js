@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const Recommendation = require('../models/Recommendation'); // Import the Recommendation model
-
+//saves recommendation to the DB from the cloud
 router.use(express.json());
 
 router.post('/receive-recommendation', async (req, res) => {
-    const { model, component_type, recommendation } = req.body;
+    const { model, component_type, recommendation, UserId, email } = req.body;
 
-    if (!model || !component_type || !recommendation) {
-        return res.status(400).send({ error: 'Invalid recommendation format' });
+    // Updated validation to include UserId and email
+    if (!model || !component_type || !recommendation || !UserId || !email) {
+        return res.status(400).send({ error: 'Invalid recommendation format, missing required information' });
     }
 
     try {
@@ -21,8 +22,9 @@ router.post('/receive-recommendation', async (req, res) => {
         });
 
         for (const rec of recommendation) {
-            // Check if a recommendation with the same attributes already exists
             const existingRecommendation = await Recommendation.findOne({
+                UserId,
+                email,
                 model,
                 componentType: component_type,
                 new_model: rec.Details.Model,
@@ -31,8 +33,9 @@ router.post('/receive-recommendation', async (req, res) => {
             });
 
             if (!existingRecommendation) {
-                // If it does not exist, create and save the new recommendation document
                 await Recommendation.create({
+                    UserId,
+                    email,
                     model,
                     componentType: component_type,
                     new_model: rec.Details.Model,
@@ -40,10 +43,7 @@ router.post('/receive-recommendation', async (req, res) => {
                     Increase: rec.Increase
                 });
             } else {
-                // Optional: Update the existing document or take some other action
                 console.log('Duplicate recommendation detected, skipping...');
-                // Example: Update existing document
-                // await existingRecommendation.updateOne({ /* new data */ });
             }
         }
 
@@ -53,6 +53,7 @@ router.post('/receive-recommendation', async (req, res) => {
         res.status(500).send('Internal server error');
     }
 });
+
 
 
 
