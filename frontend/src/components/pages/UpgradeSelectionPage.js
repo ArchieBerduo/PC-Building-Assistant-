@@ -53,9 +53,9 @@ const UpgradeSelectionPage = () => {
                         // Using a button here for clickable functionality; style as needed
                         <button key={index} className="recommendation-box" onClick={() => handleRecommendationClick(rec)}>
                             <p>Recommendation #{index + 1}</p>
-                            <p>- New Model: {rec.new_model}</p>
-                            <p>- Benchmark: {rec.benchmark}</p>
-                            <p>- Preformance Increase: {rec.Increase}%</p>
+                            <p>New Model: {rec.new_model}</p>
+                            <p>Benchmark: {rec.benchmark}</p>
+                            <p>Preformance Increase: {rec.Increase}%</p>
                         </button>
                     ))}
                 </div>

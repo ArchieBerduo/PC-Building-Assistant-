@@ -7,13 +7,11 @@ router.use(express.json());
 router.post('/receive-recommendation', async (req, res) => {
     const { model, component_type, recommendation } = req.body;
 
-    // Validation to ensure the received data has the expected structure
     if (!model || !component_type || !recommendation) {
         return res.status(400).send({ error: 'Invalid recommendation format' });
     }
 
     try {
-        // Log the received recommendation
         console.log(`Received recommendation for Model: ${model}, Component Type: ${component_type}`);
 
         recommendation.forEach((rec, index) => {
@@ -22,26 +20,40 @@ router.post('/receive-recommendation', async (req, res) => {
             console.log(`- Benchmark: ${rec.Details.Benchmark}`);
         });
 
-        // Create and save new recommendation documents in the database
         for (const rec of recommendation) {
-            await Recommendation.create({
+            // Check if a recommendation with the same attributes already exists
+            const existingRecommendation = await Recommendation.findOne({
                 model,
                 componentType: component_type,
                 new_model: rec.Details.Model,
                 benchmark: rec.Details.Benchmark,
                 Increase: rec.Increase
-                
             });
+
+            if (!existingRecommendation) {
+                // If it does not exist, create and save the new recommendation document
+                await Recommendation.create({
+                    model,
+                    componentType: component_type,
+                    new_model: rec.Details.Model,
+                    benchmark: rec.Details.Benchmark,
+                    Increase: rec.Increase
+                });
+            } else {
+                // Optional: Update the existing document or take some other action
+                console.log('Duplicate recommendation detected, skipping...');
+                // Example: Update existing document
+                // await existingRecommendation.updateOne({ /* new data */ });
+            }
         }
 
-        // Send success response
         res.status(200).send('Recommendation processed successfully');
     } catch (error) {
-        // Handle errors
         console.error('Error saving recommendation:', error);
         res.status(500).send('Internal server error');
     }
 });
+
 
 
 module.exports = router;
