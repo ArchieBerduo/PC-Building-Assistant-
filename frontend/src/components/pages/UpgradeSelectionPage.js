@@ -10,11 +10,13 @@ const UpgradeSelectionPage = () => {
 
     useEffect(() => {
         console.log("Received payload:", payload);
-
+    
         const fetchRecommendations = async () => {
             try {
                 // Constructing the URL with payload details included in the query parameters
-                const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}`);
+                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}`;
+                console.log("Request URL:", url); // Log the full request URL
+                const response = await axios.get(url);
                 
                 console.log("Received data from pullRecommendations:", response.data);
                 
@@ -24,14 +26,14 @@ const UpgradeSelectionPage = () => {
                 
                 setRecommendations(response.data);
             } catch (error) {
-                console.error("Failed to fetch recommendations:", error.response ? error.response.data : error.message);
+                console.error("Failed to fetch recommendations:", error); // Log the entire error object
                 setRecommendations([]); // Set to an empty array on error
             }
         };
-
+    
         fetchRecommendations();
     }, [payload]); // Dependency on payload ensures fetchRecommendations is called when payload changes
-
+    
     return (
         <div className="upgrade-selection-page">
             <h1 className="title">Upgrade Recommendations</h1>
