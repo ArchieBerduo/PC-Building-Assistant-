@@ -36,6 +36,12 @@ const UpgradeSelectionPage = () => {
         fetchRecommendations();
     }, [payload]);
     
+
+    const handleRecommendationClick = (recommendation) => {
+        console.log("Clicked recommendation:", recommendation);
+        // Here you can do more, like setting state to show more details, or navigate to a detail view, etc.
+    };
+
     return (
         <div className="upgrade-selection-page">
             <h1 className="title">Upgrade Recommendations</h1>
@@ -44,12 +50,13 @@ const UpgradeSelectionPage = () => {
             ) : recommendations.length > 0 ? (
                 <div>
                     {recommendations.map((rec, index) => (
-                        <div key={index} className="recommendation-box">
+                        // Using a button here for clickable functionality; style as needed
+                        <button key={index} className="recommendation-box" onClick={() => handleRecommendationClick(rec)}>
                             <p>Recommendation #{index + 1}</p>
                             <p>- New Model: {rec.new_model}</p>
                             <p>- Benchmark: {rec.benchmark}</p>
                             <p>- Increase: {rec.Increase}%</p>
-                        </div>
+                        </button>
                     ))}
                 </div>
             ) : (
