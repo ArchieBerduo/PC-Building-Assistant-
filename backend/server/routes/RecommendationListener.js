@@ -3,9 +3,9 @@ const router = express.Router();
 const Recommendation = require('../models/Recommendation'); // Import the Recommendation model
 
 router.post('/receive-recommendation', async (req, res) => {
-    const { model, component_type, recommendation, username, email } = req.body;
+    const { model, componentType, recommendation, username, email } = req.body;
 
-    if (!model || !component_type || !recommendation || !username || !email) {
+    if (!model || !componentType || !recommendation || !username || !email) {
         console.log('Error: Missing required fields in recommendation format');
         return res.status(400).send({ error: 'Missing required fields in recommendation format' });
     }
@@ -19,7 +19,7 @@ router.post('/receive-recommendation', async (req, res) => {
             // Check if a recommendation with the same attributes already exists
             const existingRecommendation = await Recommendation.findOne({
                 model,
-                componentType: component_type,
+                componentType: componentType,
                 new_model: rec.Details.Model,
                 benchmark: rec.Details.Benchmark,
                 Increase: rec.Increase,
@@ -32,7 +32,7 @@ router.post('/receive-recommendation', async (req, res) => {
                 // If it does not exist, create and save the new recommendation document
                 await Recommendation.create({
                     model,
-                    componentType: component_type,
+                    componentType: componentType,
                     new_model: rec.Details.Model,
                     benchmark: rec.Details.Benchmark,
                     Increase: rec.Increase,
