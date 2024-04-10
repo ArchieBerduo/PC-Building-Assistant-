@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Card from "react-bootstrap/Card";
 import getUserInfo from "../../utilities/decodeJwt";
+
 
 const RecommendationsPage = () => {
     const [recommendations, setRecommendations] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const fetchRecommendations = async () => {
-            const userInfo = getUserInfo(); // Retrieve user info (ensure this function synchronously returns the user object)
-
+            const userInfo = getUserInfo();
             if (!userInfo || !userInfo.username || !userInfo.email) {
                 console.error("User info is missing. Unable to fetch recommendations.");
+                setIsLoading(false);
                 return;
             }
 
             try {
-                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?username=${encodeURIComponent(userInfo.username)}&email=${encodeURIComponent(userInfo.email)}`;
+                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?email=${encodeURIComponent(userInfo.email)}&username=${encodeURIComponent(userInfo.username)}`;
                 const response = await axios.get(url);
 
                 if (response.data && response.data.length > 0) {
@@ -25,25 +28,38 @@ const RecommendationsPage = () => {
                 }
             } catch (error) {
                 console.error("Failed to fetch recommendations:", error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         fetchRecommendations();
-    }, []); // Empty dependency array means this effect runs once on component mount
+    }, []);
 
     return (
-        <div>
-            <h1 style={{ color: 'white' }}>User Recommendations</h1>
-            {recommendations.length > 0 ? (
-                <ul>
-                    {recommendations.map((rec, index) => (
-                        <li key={index}>
-                            Model: {rec.new_model}, Benchmark: {rec.benchmark}, Increase: {rec.Increase}%
-                        </li>
-                    ))}
-                </ul>
+        <div className="recommendations-page">
+            <h1 className="title">All My Recommendations</h1>
+            {isLoading ? (
+                <p>Loading recommendations...</p>
             ) : (
-                <p>No recommendations available.</p>
+                <div className="recommendations-container">
+                    {recommendations.length > 0 ? (
+                        recommendations.map((rec, index) => (
+                            <Card key={index} className="recommendation-card">
+                                <Card.Body>
+                                    <Card.Title>Recommendation #{index + 1}</Card.Title>
+                                    <Card.Text>
+                                        <p>New Model: {rec.new_model}</p>
+                                        <p>Benchmark: {rec.benchmark}</p>
+                                        <p>Performance Increase: {rec.Increase}%</p>
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        ))
+                    ) : (
+                        <p>No recommendations found.</p>
+                    )}
+                </div>
             )}
         </div>
     );
