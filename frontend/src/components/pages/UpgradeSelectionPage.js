@@ -2,44 +2,47 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../../stylesheets/UpgradeSelectionPage.css';
+import getUserInfo from "../../utilities/decodeJwt";
 
 const UpgradeSelectionPage = () => {
-    const [recommendations, setRecommendations] = useState(null); // Initialize to null to differentiate from empty response
+    const [user, setUser] = useState({});
+    const [recommendations, setRecommendations] = useState(null);
     const location = useLocation();
-    const { payload } = location.state || {}; // Ensure payload is defined or default to an empty object
+    const { payload } = location.state || {};
 
     useEffect(() => {
         console.log("Received payload:", payload);
-    
+
+        const userInfo = getUserInfo(); // Get current user's information
+        setUser(userInfo); // Set user state
+
         const fetchRecommendations = async () => {
             try {
-                // Constructing the URL with payload details included in the query parameters
-                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}`;
+                // Construct the URL with payload details and current user's email and username
+                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}&email=${encodeURIComponent(userInfo.email)}&username=${encodeURIComponent(userInfo.username)}`;
                 console.log("Request URL:", url); // Log the full request URL
                 const response = await axios.get(url);
-                
+
                 console.log("Received data from pullRecommendations:", response.data);
-                
-                // Checking if the data exists and has at least one recommendation
+
                 if (response.data && response.data.length > 0) {
                     setRecommendations(response.data);
                 } else {
-                    // If the data is not as expected, throw an error to trigger the catch block
                     throw new Error('No recommendations found');
                 }
             } catch (error) {
-                console.error("Failed to fetch recommendations:", error); // Log the entire error object
-                setRecommendations([]); // Set to an empty array on error
+                console.error("Failed to fetch recommendations:", error);
+                setRecommendations([]); // Fallback to an empty array on error
             }
         };
-    
+
         fetchRecommendations();
-    }, [payload]);
-    
+    }, [payload]); // Dependency array includes payload only since userInfo is derived inside useEffect
+
 
     const handleRecommendationClick = (recommendation) => {
         console.log("Clicked recommendation:", recommendation);
-        // Here you can do more, like setting state to show more details, or navigate to a detail view, etc.
+        // Additional actions on recommendation click
     };
 
     return (
