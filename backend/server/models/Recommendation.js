@@ -10,7 +10,6 @@ const recommendationSchema = new mongoose.Schema({
         type: String,
         required: true
     },
- 
     new_model: {
         type: String,
         required: true
@@ -19,8 +18,19 @@ const recommendationSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    Increase: { // Consider changing "Increase" to "increase" to follow JavaScript naming conventions
+    Increase: { // It's good practice to follow JavaScript naming conventions, consider renaming to "increase"
         type: Number,
+        required: true
+    },
+    
+    // Added username field
+    username: {
+        type: String,
+        required: true
+    },
+    // Added email field
+    email: {
+        type: String,
         required: true
     }
     

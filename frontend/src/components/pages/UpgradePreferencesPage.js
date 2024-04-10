@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation  } from 'react-router-dom';
 import '../../stylesheets/UpgradePreferencePage.css';
+import getUserInfo from "../../utilities/decodeJwt";
 
 const UpgradePreferencePage = () => {
+  const [user, setUser] = useState({});
     const [hardwareType, setHardwareType] = useState('CPU');
     const [formData, setFormData] = useState({
       performance: '',
@@ -22,6 +24,7 @@ const UpgradePreferencePage = () => {
       if (!selectedConfig) {
           navigate('/chooseConfig'); // Adjust the route as necessary
       }
+      setUser(getUserInfo());
   }, [navigate, selectedConfig]); // Dependencies array includes navigate and selectedConfig
 
   //const hardwareFields = {
@@ -81,6 +84,8 @@ const handleSubmit = async (event) => {
   const payload = {
     model: selectedComponentModel,
     componentType: hardwareType,
+    username: user.username, // Include userId in the payload
+    email: user.email, // Include email in the payload
   };
 
   try {
