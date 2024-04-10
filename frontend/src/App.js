@@ -15,6 +15,7 @@ import RecommendationResultPage from "./components/pages/RecommendationResultPag
 import UpgradepreferencesPage from "./components/pages/UpgradePreferencesPage";
 import UpgradeSelectionPage from "./components/pages/UpgradeSelectionPage";
 import ChooseConfigPage from "./components/pages/ChooseConfig";
+import RecommendationsPage from "./components/pages/RecommendationsPage";
 import { createContext, useState, useEffect } from "react";
 import getUserInfo from "./utilities/decodeJwt";
 import '../src/stylesheets/App.css';
@@ -39,6 +40,7 @@ const App = () => {
           <Route exact path="/home" element={<HomePage />} />
           <Route exact path= "/configure" element={<PcConfigurationSetup />} />
           <Route exact path= "/chooseConfig" element={<ChooseConfigPage/>} />
+          <Route exact path= "/AllMyRecommendations" element={<RecommendationsPage/>} />
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/signup" element={<Signup />} />
           <Route path="/privateUserProfile" element={<PrivateUserProfile />} />
