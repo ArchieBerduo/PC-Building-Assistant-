@@ -27,29 +27,46 @@ const UpgradePreferencePage = () => {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        if (name === "hardwareType") {
-            setHardwareType(value);
-        } else {
-            const filteredValue = name === 'budget' ? value.replace(/[^\d.]/g, '') : value;
-            setFormData(prevFormData => ({
-                ...prevFormData,
-                [name]: filteredValue,
-            }));
-        }
+        const filteredValue = name === 'budget' ? value.replace(/[^\d.]/g, '') : value;
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: value, // Directly set value for non-budget inputs
+        }));
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const selectedComponentModel = selectedConfig ? selectedConfig[hardwareType.toLowerCase()] : null;
         const payload = {
             model: selectedComponentModel,
-            componentType: hardwareType, // Correctly pass the selected hardwareType
+            componentType: hardwareType,
             username: user.username,
             email: user.email,
             selectedConfig: selectedConfig,
         };
 
-        navigate('/upgradeSelection', { state: { payload } }); // Navigate with the payload
+        try {
+            const response = await fetch('https://us-central1-watchful-net-416319.cloudfunctions.net/PC_Building_Assistant_Communicator', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                const errorResponse = await response.text();
+                throw new Error(`Network response was not ok: ${response.status} - ${errorResponse}`);
+            }
+
+            const data = await response.json();
+            console.log('Success:', data);
+
+            // Navigate to UpgradeSelectionPage after successful submission
+            navigate('/upgradeSelection', { state: { payload } });
+        } catch (error) {
+            console.error('Error:', error);
+        }
     };
 
     return (
