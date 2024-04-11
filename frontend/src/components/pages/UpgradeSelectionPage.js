@@ -16,22 +16,36 @@ const UpgradeSelectionPage = () => {
     useEffect(() => {
         setUser(getUserInfo());
         console.log("Payload received on UpgradeSelectionPage:", payload);
+
+        // Set the selected configuration if available
         if (payload && payload.selectedConfig) {
             setSelectedConfig(payload.selectedConfig);
-        } else {
-            console.log("No selectedConfig found in payload.");
         }
-    }, [payload]);
 
-    const fetchRecommendations = (selectedConfig) => {
-        const url = `${process.env.REACT_APP_BACKEND_URL}/recommendations/${selectedConfig.componentType}`;
-        axios.get(url).then(response => {
-            setRecommendations(response.data);
-        }).catch(error => {
-            console.error('Failed to fetch recommendations:', error);
-            setRecommendations([]);
-        });
-    };
+        // Fetch recommendations based on the payload details
+        const fetchRecommendations = async () => {
+            if (payload && payload.componentType && payload.model) {
+                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}&email=${encodeURIComponent(user.email)}&username=${encodeURIComponent(user.username)}`;
+                console.log("Request URL:", url);
+                try {
+                    const response = await axios.get(url);
+                    console.log("Received data from pullRecommendations:", response.data);
+                    if (response.data && response.data.length > 0) {
+                        setRecommendations(response.data);
+                    } else {
+                        throw new Error('No recommendations found');
+                    }
+                } catch (error) {
+                    console.error("Failed to fetch recommendations:", error);
+                    setRecommendations([]);
+                }
+            } else {
+                console.log("Insufficient data for fetching recommendations.");
+            }
+        };
+
+        fetchRecommendations();
+    }, [payload]); // Dependency array includes payload only since userInfo is derived inside useEffect
 
     const handleRecommendationClick = async (recommendation) => {
         setSelectedRecommendation(recommendation);
@@ -48,7 +62,6 @@ const UpgradeSelectionPage = () => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/editPCConfig`, updatePayload);
             console.log('Update success:', response.data);
-            // Optionally navigate or update UI, e.g., to a profile page to view the updated configuration
         } catch (error) {
             console.error('Failed to update configuration:', error.response || error.message);
         }
@@ -69,10 +82,10 @@ const UpgradeSelectionPage = () => {
                     ))}
                 </div>
             ) : <p>No recommendations found.</p>}
-    
+
             {selectedConfig ? (
                 <div className="selected-config-display" style={{ backgroundColor: '#2a2a2a', color: '#fff', padding: '20px', borderRadius: '10px', marginTop: '20px' }}>
-                    <h2>Current Configuration</h2>
+                    <h2>{selectedRecommendation ? "Updated Configuration" : "Current Configuration"}</h2>
                     <p>CPU: {selectedConfig.cpu}</p>
                     <p>GPU: {selectedConfig.gpu}</p>
                     <p>HDD: {selectedConfig.hdd}</p>
@@ -82,7 +95,6 @@ const UpgradeSelectionPage = () => {
             ) : <p>Loading configuration...</p>}
         </div>
     );
-    
 };
 
 export default UpgradeSelectionPage;
