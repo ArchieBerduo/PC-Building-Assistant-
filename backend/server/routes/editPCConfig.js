@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 const UserPC = require('../models/userPc'); // Ensure this path correctly points to your UserPC model
 
-router.post('/', async (req, res) => {
+router.post('/editPCConfig', async (req, res) => {
   const { username, email, new_model, componentType, selectedConfiguration } = req.body;
 
   console.log("Received data:", { username, email, new_model, componentType, selectedConfiguration });
 
   if (!username || !email || !new_model || !componentType || !selectedConfiguration) {
-    console.error("Missing required fields");
+    console.error("Validation Error - Missing fields:", { username, email, new_model, componentType, selectedConfiguration });
     return res.status(400).send({ message: 'Missing required fields' });
-  }
+}
 
   try {
     const query = { username, email, ...selectedConfiguration };

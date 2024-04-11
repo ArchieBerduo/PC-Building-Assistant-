@@ -49,26 +49,28 @@ const UpgradeSelectionPage = () => {
     }, [payload]); // React to changes in payload
 
     const handleRecommendationClick = async (recommendation) => {
-        setSelectedRecommendation(recommendation);
         const updatedConfig = { ...selectedConfig, [recommendation.componentType.toLowerCase()]: recommendation.new_model };
         setSelectedConfig(updatedConfig);
-    
+      
         const updatePayload = {
             username: user.username,
             email: user.email,
             componentType: recommendation.componentType,
             new_model: recommendation.new_model,
-            selectedConfig: selectedConfig // Include the entire selectedConfig in the payload
+            selectedConfig: selectedConfig
         };
     
+        console.log("Sending payload:", updatePayload);  // Add this to debug the payload
+    
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/editPCConfig`, updatePayload);
+            const response = await axios.post('https://pc-building-assistant-backend.onrender.com/editPCConfig', updatePayload);
             console.log('Update success:', response.data);
             navigate('/privateUserProfile'); // Navigate after successful update
         } catch (error) {
             console.error('Failed to update configuration:', error.response || error.message);
         }
     };
+    
     
 
     return (
