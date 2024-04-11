@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const UserPC = require('../models/userPc'); // Ensure this path correctly points to your UserPC model
 
-router.post('/editPCConfig', async (req, res) => {
+router.post('/', async (req, res) => {
   const { username, email, new_model, componentType, selectedConfiguration } = req.body;
 
   console.log("Received data:", { username, email, new_model, componentType, selectedConfiguration });
