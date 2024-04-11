@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../../stylesheets/UpgradeSelectionPage.css';
 import getUserInfo from "../../utilities/decodeJwt";
@@ -7,18 +7,24 @@ import getUserInfo from "../../utilities/decodeJwt";
 const UpgradeSelectionPage = () => {
     const [user, setUser] = useState({});
     const [recommendations, setRecommendations] = useState(null);
-    const [selectedRecommendation, setSelectedRecommendation] = useState(null); // State to hold the selected recommendation
+    const [selectedRecommendation, setSelectedRecommendation] = useState(null);
+    const [selectedConfig, setSelectedConfig] = useState(null);
     const location = useLocation();
     const navigate = useNavigate();
     const { payload } = location.state || {};
 
     useEffect(() => {
-        // Existing fetchRecommendations logic
+        setUser(getUserInfo());
+        if (payload && payload.selectedConfig) {
+            setSelectedConfig(payload.selectedConfig);
+        }
+        // You should add logic here to fetch recommendations based on the selectedConfig
     }, [payload]);
 
     const handleRecommendationClick = async (recommendation) => {
-        // Set the selected recommendation for display
         setSelectedRecommendation(recommendation);
+        const updatedConfig = { ...selectedConfig, [recommendation.componentType.toLowerCase()]: recommendation.new_model };
+        setSelectedConfig(updatedConfig);
 
         const updatePayload = {
             username: user.username,
@@ -30,7 +36,7 @@ const UpgradeSelectionPage = () => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/editPCConfig`, updatePayload);
             console.log('Update success:', response.data);
-            // navigate('/privateUserProfile'); // Consider commenting this out to show the update first on this page
+            // Optionally navigate or update UI
         } catch (error) {
             console.error('Failed to update configuration:', error.response || error.message);
         }
@@ -54,15 +60,15 @@ const UpgradeSelectionPage = () => {
                 <p>No recommendations found.</p>
             )}
 
-            {/* Display the selected configuration */}
-            {selectedRecommendation && (
-                <div className="selected-config-display" style={{ backgroundColor: '#2a2a2a', color: '#fff', padding: '20px', borderRadius: '10px', marginTop: '20px' }}>
-                    <h2>Selected Configuration Update</h2>
-                    <p>Component Type: {selectedRecommendation.componentType}</p>
-                    <p>Current Model: {payload.selectedConfig[selectedRecommendation.componentType.toLowerCase()]}</p>
-                    <p>New Model: {selectedRecommendation.new_model}</p>
-                </div>
-            )}
+            {/* Display the original or updated configuration dynamically */}
+            <div className="selected-config-display" style={{ backgroundColor: '#2a2a2a', color: '#fff', padding: '20px', borderRadius: '10px', marginTop: '20px' }}>
+                <h2>{selectedRecommendation ? "Updated Configuration" : "Current Configuration"}</h2>
+                <p>CPU: {selectedConfig ? selectedConfig.cpu : 'Loading...'}</p>
+                <p>GPU: {selectedConfig ? selectedConfig.gpu : 'Loading...'}</p>
+                <p>HDD: {selectedConfig ? selectedConfig.hdd : 'Loading...'}</p>
+                <p>SSD: {selectedConfig ? selectedConfig.ssd : 'Loading...'}</p>
+                <p>RAM: {selectedConfig ? selectedConfig.ram : 'Loading...'}</p>
+            </div>
         </div>
     );
 };
