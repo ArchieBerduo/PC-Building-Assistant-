@@ -13,6 +13,7 @@ const hardwarePull = require('./routes/hardwarePull');
 const pcConfigSave = require('./routes/pcConfigSave');
 const recommendationRouter = require('./routes/RecommendationListener');
 const pullRecommendations = require('./routes/pullRecommendations');
+const editPCConfig = require('./routes/editPCConfig')
 
 
 // Assuming HardwareDB.js exports a function named runImport for importing CSV data
@@ -35,6 +36,8 @@ app.use('/user', getUserByIdRoute);
 app.use('/user', editUser);
 app.use('/user', deleteUser);
 app.use('/user', pcConfigSave);
+
+app.use('./editPCConfig', editPCConfig);
 
 // Other app.use() calls
 app.use('/user', hardwarePull);

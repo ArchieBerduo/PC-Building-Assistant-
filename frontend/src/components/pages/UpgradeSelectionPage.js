@@ -13,6 +13,7 @@ const UpgradeSelectionPage = () => {
     useEffect(() => {
         console.log("Received payload:", payload);
 
+        const { selectedConfig } = payload;
         const userInfo = getUserInfo(); // Get current user's information
         setUser(userInfo); // Set user state
 
