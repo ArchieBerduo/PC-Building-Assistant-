@@ -61,9 +61,8 @@ const UpgradeSelectionPage = () => {
         };
 
         try {
-            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/editPCConfig`, updatePayload);
-            console.log('Update success:', response.data);
-            // Consider navigating or updating UI after successful configuration update
+            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/editPCConfig`, updatePayload);
+            navigate('/privateUserProfile'); // Navigate after successful update
         } catch (error) {
             console.error('Failed to update configuration:', error.response || error.message);
         }
