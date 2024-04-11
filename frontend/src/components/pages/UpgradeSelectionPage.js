@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import axios from 'axios';
 import '../../stylesheets/UpgradeSelectionPage.css';
 import getUserInfo from "../../utilities/decodeJwt";
@@ -7,64 +7,61 @@ import getUserInfo from "../../utilities/decodeJwt";
 const UpgradeSelectionPage = () => {
     const [user, setUser] = useState({});
     const [recommendations, setRecommendations] = useState(null);
+    const [selectedRecommendation, setSelectedRecommendation] = useState(null); // State to hold the selected recommendation
     const location = useLocation();
+    const navigate = useNavigate();
     const { payload } = location.state || {};
 
     useEffect(() => {
-        console.log("Received payload:", payload);
+        // Existing fetchRecommendations logic
+    }, [payload]);
 
-        const { selectedConfig } = payload;
-        const userInfo = getUserInfo(); // Get current user's information
-        setUser(userInfo); // Set user state
+    const handleRecommendationClick = async (recommendation) => {
+        // Set the selected recommendation for display
+        setSelectedRecommendation(recommendation);
 
-        const fetchRecommendations = async () => {
-            try {
-                // Construct the URL with payload details and current user's email and username
-                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}&email=${encodeURIComponent(userInfo.email)}&username=${encodeURIComponent(userInfo.username)}`;
-                console.log("Request URL:", url); // Log the full request URL
-                const response = await axios.get(url);
-
-                console.log("Received data from pullRecommendations:", response.data);
-
-                if (response.data && response.data.length > 0) {
-                    setRecommendations(response.data);
-                } else {
-                    throw new Error('No recommendations found');
-                }
-            } catch (error) {
-                console.error("Failed to fetch recommendations:", error);
-                setRecommendations([]); // Fallback to an empty array on error
-            }
+        const updatePayload = {
+            username: user.username,
+            email: user.email,
+            componentType: recommendation.componentType,
+            new_model: recommendation.new_model,
         };
 
-        fetchRecommendations();
-    }, [payload]); // Dependency array includes payload only since userInfo is derived inside useEffect
-
-
-    const handleRecommendationClick = (recommendation) => {
-        console.log("Clicked recommendation:", recommendation);
-        // Additional actions on recommendation click
+        try {
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/editPCConfig`, updatePayload);
+            console.log('Update success:', response.data);
+            // navigate('/privateUserProfile'); // Consider commenting this out to show the update first on this page
+        } catch (error) {
+            console.error('Failed to update configuration:', error.response || error.message);
+        }
     };
 
     return (
         <div className="upgrade-selection-page">
             <h1 className="title">Upgrade Recommendations</h1>
-            {recommendations === null ? (
-                <p>Loading recommendations...</p>
-            ) : recommendations.length > 0 ? (
+            {recommendations && recommendations.length > 0 ? (
                 <div className="boxes-container">
                     {recommendations.map((rec, index) => (
-                        // Using a button here for clickable functionality; style as needed
                         <button key={index} className="recommendation-box" onClick={() => handleRecommendationClick(rec)}>
                             <p>Recommendation #{index + 1}</p>
                             <p>New Model: {rec.new_model}</p>
                             <p>Benchmark: {rec.benchmark}</p>
-                            <p>Preformance Increase: {rec.Increase}%</p>
+                            <p>Performance Increase: {rec.Increase}%</p>
                         </button>
                     ))}
                 </div>
             ) : (
                 <p>No recommendations found.</p>
+            )}
+
+            {/* Display the selected configuration */}
+            {selectedRecommendation && (
+                <div className="selected-config-display" style={{ backgroundColor: '#2a2a2a', color: '#fff', padding: '20px', borderRadius: '10px', marginTop: '20px' }}>
+                    <h2>Selected Configuration Update</h2>
+                    <p>Component Type: {selectedRecommendation.componentType}</p>
+                    <p>Current Model: {payload.selectedConfig[selectedRecommendation.componentType.toLowerCase()]}</p>
+                    <p>New Model: {selectedRecommendation.new_model}</p>
+                </div>
             )}
         </div>
     );
