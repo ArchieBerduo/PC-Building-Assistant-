@@ -27,11 +27,15 @@ const UpgradePreferencePage = () => {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        const filteredValue = name === 'budget' ? value.replace(/[^\d.]/g, '') : value;
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [name]: filteredValue,
-        }));
+        if (name === "hardwareType") {
+            setHardwareType(value);
+        } else {
+            const filteredValue = name === 'budget' ? value.replace(/[^\d.]/g, '') : value;
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                [name]: filteredValue,
+            }));
+        }
     };
 
     const handleSubmit = (event) => {
@@ -39,10 +43,10 @@ const UpgradePreferencePage = () => {
         const selectedComponentModel = selectedConfig ? selectedConfig[hardwareType.toLowerCase()] : null;
         const payload = {
             model: selectedComponentModel,
-            componentType: hardwareType,
+            componentType: hardwareType, // Correctly pass the selected hardwareType
             username: user.username,
             email: user.email,
-            selectedConfig: selectedConfig, // Ensuring this is passed correctly
+            selectedConfig: selectedConfig,
         };
 
         navigate('/upgradeSelection', { state: { payload } }); // Navigate with the payload
