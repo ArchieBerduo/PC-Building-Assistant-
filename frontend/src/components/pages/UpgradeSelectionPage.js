@@ -52,21 +52,24 @@ const UpgradeSelectionPage = () => {
         setSelectedRecommendation(recommendation);
         const updatedConfig = { ...selectedConfig, [recommendation.componentType.toLowerCase()]: recommendation.new_model };
         setSelectedConfig(updatedConfig);
-
+    
         const updatePayload = {
             username: user.username,
             email: user.email,
             componentType: recommendation.componentType,
             new_model: recommendation.new_model,
+            selectedConfig: selectedConfig // Include the entire selectedConfig in the payload
         };
-
+    
         try {
-            await axios.post(`${process.env.REACT_APP_BACKEND_URL}/editPCConfig`, updatePayload);
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/editPCConfig`, updatePayload);
+            console.log('Update success:', response.data);
             navigate('/privateUserProfile'); // Navigate after successful update
         } catch (error) {
             console.error('Failed to update configuration:', error.response || error.message);
         }
     };
+    
 
     return (
         <div className="upgrade-selection-page">
