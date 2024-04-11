@@ -15,11 +15,23 @@ const UpgradeSelectionPage = () => {
 
     useEffect(() => {
         setUser(getUserInfo());
+        console.log("Payload received on UpgradeSelectionPage:", payload);
         if (payload && payload.selectedConfig) {
             setSelectedConfig(payload.selectedConfig);
+        } else {
+            console.log("No selectedConfig found in payload.");
         }
-        // You should add logic here to fetch recommendations based on the selectedConfig
     }, [payload]);
+
+    const fetchRecommendations = (selectedConfig) => {
+        const url = `${process.env.REACT_APP_BACKEND_URL}/recommendations/${selectedConfig.componentType}`;
+        axios.get(url).then(response => {
+            setRecommendations(response.data);
+        }).catch(error => {
+            console.error('Failed to fetch recommendations:', error);
+            setRecommendations([]);
+        });
+    };
 
     const handleRecommendationClick = async (recommendation) => {
         setSelectedRecommendation(recommendation);
@@ -36,7 +48,7 @@ const UpgradeSelectionPage = () => {
         try {
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/editPCConfig`, updatePayload);
             console.log('Update success:', response.data);
-            // Optionally navigate or update UI
+            // Optionally navigate or update UI, e.g., to a profile page to view the updated configuration
         } catch (error) {
             console.error('Failed to update configuration:', error.response || error.message);
         }
@@ -56,21 +68,21 @@ const UpgradeSelectionPage = () => {
                         </button>
                     ))}
                 </div>
-            ) : (
-                <p>No recommendations found.</p>
-            )}
-
-            {/* Display the original or updated configuration dynamically */}
-            <div className="selected-config-display" style={{ backgroundColor: '#2a2a2a', color: '#fff', padding: '20px', borderRadius: '10px', marginTop: '20px' }}>
-                <h2>{selectedRecommendation ? "Updated Configuration" : "Current Configuration"}</h2>
-                <p>CPU: {selectedConfig ? selectedConfig.cpu : 'Loading...'}</p>
-                <p>GPU: {selectedConfig ? selectedConfig.gpu : 'Loading...'}</p>
-                <p>HDD: {selectedConfig ? selectedConfig.hdd : 'Loading...'}</p>
-                <p>SSD: {selectedConfig ? selectedConfig.ssd : 'Loading...'}</p>
-                <p>RAM: {selectedConfig ? selectedConfig.ram : 'Loading...'}</p>
-            </div>
+            ) : <p>No recommendations found.</p>}
+    
+            {selectedConfig ? (
+                <div className="selected-config-display" style={{ backgroundColor: '#2a2a2a', color: '#fff', padding: '20px', borderRadius: '10px', marginTop: '20px' }}>
+                    <h2>Current Configuration</h2>
+                    <p>CPU: {selectedConfig.cpu}</p>
+                    <p>GPU: {selectedConfig.gpu}</p>
+                    <p>HDD: {selectedConfig.hdd}</p>
+                    <p>SSD: {selectedConfig.ssd}</p>
+                    <p>RAM: {selectedConfig.ram}</p>
+                </div>
+            ) : <p>Loading configuration...</p>}
         </div>
     );
+    
 };
 
 export default UpgradeSelectionPage;

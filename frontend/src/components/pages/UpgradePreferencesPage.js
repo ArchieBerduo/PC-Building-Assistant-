@@ -1,119 +1,54 @@
-// UpgradePreferencePage.js
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation  } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../../stylesheets/UpgradePreferencePage.css';
 import getUserInfo from "../../utilities/decodeJwt";
 
 const UpgradePreferencePage = () => {
-  const [user, setUser] = useState({});
+    const [user, setUser] = useState({});
     const [hardwareType, setHardwareType] = useState('CPU');
     const [formData, setFormData] = useState({
-      performance: '',
-      budget: '',
-      speed: '',
-      storage: '',
-      type: '',
+        performance: '',
+        budget: '',
+        speed: '',
+        storage: '',
+        type: '',
     });
   
     const location = useLocation();
-    const navigate = useNavigate(); // Updated to useNavigate
+    const navigate = useNavigate();
     const { selectedConfig } = location.state || {};
 
-     // Redirect the user to the configuration selection page if no configuration is selected
-     useEffect(() => {
-      if (!selectedConfig) {
-          navigate('/chooseConfig'); // Adjust the route as necessary
-      }
-      setUser(getUserInfo());
-  }, [navigate, selectedConfig]); // Dependencies array includes navigate and selectedConfig
+    useEffect(() => {
+        if (!selectedConfig) {
+            navigate('/chooseConfig'); // Redirect if no configuration is selected
+        }
+        setUser(getUserInfo());
+    }, [navigate, selectedConfig]);
 
-  //const hardwareFields = {
-    //CPU: [
-      //{ name: 'performance', label: 'What is the desired Performance (%)?', type: 'dropdown', options: ['Select','15%', '30%', '45%'] },
-     // { name: 'budget', label: 'What is the budget ($)?', type: 'number' },
-   // ],
-  //  GPU: [
-    //  { name: 'performance', label: 'What is the desired Performance (%)?', type: 'dropdown', options: ['Select','15%', '30%', '45%'] },
-    //  { name: 'budget', label: 'What is the budget ($)?', type: 'number' },
-   // ],
-  //  RAM: [
-   //   { name: 'speed', label: 'What is the desired Speed (MHz)?', type: 'number' },
-   //   { name: 'budget', label: 'What is the budget ($)?', type: 'number' },
-  //  ],
-   // HDD: [
-   //   { name: 'storage', label: 'Desired Storage Space (TB)', type: 'number' },
-    //  { name: 'type', label: 'Is it HDD or SSD?', type: 'text' },
-   // ],
-   // SSD: [
-      //{ name: 'storage', label: 'Desired Storage Space (TB)', type: 'number' },
-     // { name: 'type', label: 'Is it HDD or SSD?', type: 'text' },
-   // ],
- // };
+    const handleInputChange = (event) => {
+        const { name, value } = event.target;
+        const filteredValue = name === 'budget' ? value.replace(/[^\d.]/g, '') : value;
+        setFormData(prevFormData => ({
+            ...prevFormData,
+            [name]: filteredValue,
+        }));
+    };
 
- 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const selectedComponentModel = selectedConfig ? selectedConfig[hardwareType.toLowerCase()] : null;
+        const payload = {
+            model: selectedComponentModel,
+            componentType: hardwareType,
+            username: user.username,
+            email: user.email,
+            selectedConfig: selectedConfig, // Ensuring this is passed correctly
+        };
 
+        navigate('/upgradeSelection', { state: { payload } }); // Navigate with the payload
+    };
 
-
-const handleInputChange = (event) => {
-  const { name, value } = event.target;
-
-  // Check if the input value is for the budget field
-  if (name === 'budget') {
-      // Allow only numbers and a dot
-      const numericalValue = value.replace(/[^\d.]/g, '');
-      
-      // Update the form data with the sanitized input value
-      setFormData(prevFormData => ({
-          ...prevFormData,
-          [name]: numericalValue,
-      }));
-  } else {
-      // Update the form data with the input value for other fields
-      setFormData(prevFormData => ({
-          ...prevFormData,
-          [name]: value,
-      }));
-  }
-};
-
-const handleSubmit = async (event) => {
-  event.preventDefault();
-
-  // Your existing form submission logic here...
-  const selectedComponentModel = selectedConfig ? selectedConfig[hardwareType.toLowerCase()] : null;
-  const payload = {
-    model: selectedComponentModel,
-    componentType: hardwareType,
-    username: user.username, // Include userId in the payload
-    email: user.email, // Include email in the payload
-  };
-
-  try {
-    const response = await fetch('https://us-central1-watchful-net-416319.cloudfunctions.net/PC_Building_Assistant_Communicator', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      mode: 'cors',
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      const errorResponse = await response.text();
-      throw new Error(`Network response was not ok: ${response.status} - ${errorResponse}`);
-    }
-
-    const data = await response.json();
-    console.log('Success:', data);
-
-    // Navigate to UpgradeSelectionPage after successful submission
-    navigate('/upgradeSelection', { state: { payload } });
-  } catch (error) {
-    console.error('Error:', error);
-  }
-};
-
-  return (
+    return (
         <div className="container">
             {selectedConfig && (
                 <div className="selected-config-display" style={{ backgroundColor: '#2a2a2a', color: '#fff', padding: '20px', borderRadius: '10px', marginBottom: '20px' }}>
@@ -125,12 +60,11 @@ const handleSubmit = async (event) => {
                     <p>RAM: {selectedConfig.ram}</p>
                 </div>
             )}
-
             <form onSubmit={handleSubmit} className="form-container">
                 <div className="title-dropdown-container">
                     <select
                         className="hardware-select-title"
-                        onChange={(e) => setHardwareType(e.target.value)}
+                        onChange={handleInputChange}
                         value={hardwareType}
                         name="hardwareType"
                     >
