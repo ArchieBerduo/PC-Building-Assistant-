@@ -37,7 +37,7 @@ app.use('/user', editUser);
 app.use('/user', deleteUser);
 app.use('/user', pcConfigSave);
 
-app.use('./editPCConfig', editPCConfig);
+app.use('/editPCConfig', editPCConfig);
 
 // Other app.use() calls
 app.use('/user', hardwarePull);
