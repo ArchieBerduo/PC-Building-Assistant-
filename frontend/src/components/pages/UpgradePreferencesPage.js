@@ -27,13 +27,18 @@ const UpgradePreferencePage = () => {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        const filteredValue = name === 'budget' ? value.replace(/[^\d.]/g, '') : value;
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [name]: value, // Directly set value for non-budget inputs
-        }));
+    
+        // Specifically handle changes to the hardware type dropdown
+        if (name === "hardwareType") {
+            setHardwareType(value);
+        } else {
+            // Handle other inputs normally
+            setFormData(prevFormData => ({
+                ...prevFormData,
+                [name]: value,
+            }));
+        }
     };
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         const selectedComponentModel = selectedConfig ? selectedConfig[hardwareType.toLowerCase()] : null;
