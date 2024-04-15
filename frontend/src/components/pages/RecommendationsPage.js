@@ -44,18 +44,16 @@ const RecommendationsPage = () => {
             ) : (
                 <div className="recommendations-container">
                     {recommendations.length > 0 ? (
-                        recommendations.map((rec, index) => (
-                            <Card key={index} className="recommendation-card">
-                                <Card.Body>
-                                    <Card.Title>Recommendation #{index + 1}</Card.Title>
-                                    <Card.Text>
-                                        <p>New Model: {rec.new_model}</p>
-                                        <p>Benchmark: {rec.benchmark}</p>
-                                        <p>Performance Increase: {rec.Increase}%</p>
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        ))
+                       recommendations.map((rec, index) => (
+                        <div key={index}>
+                            <h2>Recommendation #{index + 1}</h2>
+                            <p>Model: {rec.model}</p>
+                            <p>New Model: {rec.new_model}</p>
+                            <p>Component Type: {rec.componentType}</p>
+                            <p>Benchmark: {rec.benchmark}</p>
+                            <p>Performance Increase: {rec.Increase}%</p>
+                        </div>
+                    ))
                     ) : (
                         <p>No recommendations found.</p>
                     )}
