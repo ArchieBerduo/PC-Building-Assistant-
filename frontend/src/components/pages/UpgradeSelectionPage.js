@@ -47,17 +47,16 @@ const UpgradeSelectionPage = () => {
 
         fetchRecommendations();
     }, [payload]); // React to changes in payload
-
     const handleRecommendationClick = async (recommendation) => {
         const updatedConfig = { ...selectedConfig, [recommendation.componentType.toLowerCase()]: recommendation.new_model };
         setSelectedConfig(updatedConfig);  // Update the selected configuration
-
+    
         const updatePayload = {
             username: user.username,
             email: user.email,
             componentType: recommendation.componentType,
             new_model: recommendation.new_model,
-            selectedConfig: updatedConfig  // Use updatedConfig directly
+            selectedConfiguration: updatedConfig  // Change this field name to match the backend expectation
         };
     
         console.log("Sending payload:", updatePayload);  // Debug to check the payload values
