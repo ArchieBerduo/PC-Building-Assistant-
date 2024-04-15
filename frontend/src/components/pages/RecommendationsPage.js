@@ -18,7 +18,7 @@ const RecommendationsPage = () => {
             }
 
             try {
-                const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?email=${encodeURIComponent(userInfo.email)}&username=${encodeURIComponent(userInfo.username)}`;
+                const url = `${process.env.REACT_APP_BACKEND_URL}/pullAllRecommendations?email=${encodeURIComponent(userInfo.email)}&username=${encodeURIComponent(userInfo.username)}`;
                 const response = await axios.get(url);
 
                 if (response.data && response.data.length > 0) {
