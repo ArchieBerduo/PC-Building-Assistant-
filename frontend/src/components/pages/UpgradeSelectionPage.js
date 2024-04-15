@@ -50,17 +50,17 @@ const UpgradeSelectionPage = () => {
 
     const handleRecommendationClick = async (recommendation) => {
         const updatedConfig = { ...selectedConfig, [recommendation.componentType.toLowerCase()]: recommendation.new_model };
-        setSelectedConfig(updatedConfig);
-      
+        setSelectedConfig(updatedConfig);  // Update the selected configuration
+
         const updatePayload = {
             username: user.username,
             email: user.email,
             componentType: recommendation.componentType,
             new_model: recommendation.new_model,
-            selectedConfig: selectedConfig
+            selectedConfig: updatedConfig  // Use updatedConfig directly
         };
     
-        console.log("Sending payload:", updatePayload);  // Add this to debug the payload
+        console.log("Sending payload:", updatePayload);  // Debug to check the payload values
     
         try {
             const response = await axios.post('https://pc-building-assistant-backend.onrender.com/editPCConfig', updatePayload);
