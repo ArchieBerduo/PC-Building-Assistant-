@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import getUserInfo from "../../utilities/decodeJwt";
+import '../../stylesheets/UpgradeSelectionPage.css'; // Import the same stylesheet
 
 const RecommendationsPage = () => {
     const [groupedRecommendations, setGroupedRecommendations] = useState({});
@@ -45,7 +46,7 @@ const RecommendationsPage = () => {
     };
 
     return (
-        <div className="recommendations-page" style={{ color: 'white' }}>
+        <div className="upgrade-selection-page">  {/* Reuse the same class for styling */}
             <h1 className="title">All My Recommendations</h1>
             {isLoading ? (
                 <p>Loading recommendations...</p>
@@ -54,7 +55,7 @@ const RecommendationsPage = () => {
                     <div key={index} className="model-group">
                         <h2>{model}</h2>
                         {recs.map((rec, idx) => (
-                            <div key={idx} className="recommendation-detail">
+                            <div key={idx} className="recommendation-box">
                                 <p>New Model: {rec.new_model}</p>
                                 <p>Component Type: {rec.componentType}</p>
                                 <p>Benchmark: {rec.benchmark}</p>
