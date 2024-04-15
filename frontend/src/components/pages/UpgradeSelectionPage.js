@@ -45,18 +45,18 @@ const UpgradeSelectionPage = () => {
     const handleRecommendationClick = async (recommendation) => {
         const updatedConfig = { ...displayConfig, [recommendation.componentType.toLowerCase()]: recommendation.new_model };
         setDisplayConfig(updatedConfig); // Only update the display configuration
-
-        // This payload should carry the original selected configuration prior to any changes
+    
+        // Send the component type in lowercase
         const updatePayload = {
             username: user.username,
             email: user.email,
-            componentType: recommendation.componentType,
+            componentType: recommendation.componentType.toLowerCase(), // Ensure lowercase
             new_model: recommendation.new_model,
             selectedConfiguration: selectedConfig // Send the original configuration
         };
-
+    
         console.log("Sending payload:", updatePayload); // Debug to check the payload values
-
+    
         try {
             const response = await axios.post('https://pc-building-assistant-backend.onrender.com/editPCConfig', updatePayload);
             console.log('Update success:', response.data);
