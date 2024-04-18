@@ -77,14 +77,14 @@ const PrivateUserProfile = () => {
           ))}
         </div>
         <div className="action-buttons-container">
-          <Button className="add-config-button" onClick={() => navigate("/configure")}>
-            <img src="/plus-sign-icon.png" alt="add" style={{ filter: 'invert(100%)' }} />
-            <span>Add more configurations</span>
-          </Button>
+        <Button className="config-button-new" onClick={() => navigate("/configure")}>
+    <img src="/plus-sign-icon.png" alt="add" style={{ filter: 'invert(100%)' }} />
+    <span>Add more configurations</span>
+</Button>
           {/* Add the new navigation button for all recommendations */}
           <Button className="view-recommendations-button" onClick={() => navigate("/AllMyRecommendations")}>
-            View All My Recommendations
-          </Button>
+    View All My Recommendations
+</Button>
         </div>
       </>
       <Button className="logout-modal-button" onClick={() => setShow(true)}>Log Out</Button>

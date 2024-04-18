@@ -71,7 +71,7 @@ const PcConfigurationSetup = () => { // Rename function to start with uppercase 
     axios.post(url, payload)
       .then(response => {
         console.log('Success:', response.data);
-        navigate('/success-page');
+        navigate('/privateUserProfile');
       })
       .catch(error => {
         console.error('Error saving components:', error);

@@ -8,6 +8,7 @@
   align-items: flex-start; /* Align content to the top left */
   justify-content: flex-start; /* Align content to the top */
   position: relative; /* Set position to relative for absolute positioning */
+
 }
 
 .profile-heading {
@@ -28,6 +29,34 @@
 .username,
 .email {
   margin-left: 40px; /* Move username and email 40px to the right */
+}
+
+.config-button-new {
+  /* Copy all the properties from add-config-button here */
+  width: 50px;
+  height: 40px;
+  background-color: #2a2a2a !important; /* Ensure background color is applied */
+  border: 1px solid #2a2a2a !important; /* Ensure border color is applied */
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 10px;
+  cursor: pointer;
+  color: white;
+  position: absolute; /* Ensure it maintains its position */
+  top: 230px; /* Adjust top position */
+  right: -60px; /* Adjust right position */
+} 
+
+.config-button-new img {
+  width: 20px; /* Example size */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 5px; /* Space between icon and text */
+}
+
+.config-button-new span {
+  font-size: 12px; /* Adjust as necessary */
+  white-space: nowrap; /* Keeps the text on one line */
 }
 
 .logout-modal-button {
@@ -122,7 +151,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  position: relative; /* Necessary for absolute positioning */
+  padding: 20px; /* Provides padding inside the container */
+  max-height: 600px; /* Example: Adjust based on your UI design */
+  overflow-y: auto; /* Enable vertical scrolling within the container */
 }
 
 .pc-config-card {
@@ -141,6 +172,13 @@
     width: calc(100% - 20px); /* 100% width for each card with 20px margin on even smaller screens */
   }
 }
+
+.action-buttons-container {
+  display: flex;
+  justify-content: flex-end; /* Aligns items to the right */
+  margin-left: 500px; /* Increase as needed to push more to the right */
+}
+
 .add-config-button {
   width: 150px;
   height: 300px;
@@ -204,4 +242,23 @@
   outline: none;
   /* Optional: Add an alternative focus style for accessibility */
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); /* Example: subtle white glow */
+}
+
+.config-button-new, .view-recommendations-button {
+  width: 150px;  /* Adjust width as needed */
+  height: 50px;  /* Adjust height to fit content */
+  background-color: #2a2a2a !important; /* Ensure background color is applied */
+  color: white; /* Text color */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners for aesthetic */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Initial subtle shadow */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  padding: 10px 20px; /* Padding around the text */
+  cursor: pointer; /* Indicates button is clickable */
+}
+
+.config-button-new:hover, .view-recommendations-button:hover {
+  transform: translateY(-5px); /* Slight upward movement on hover */
+  box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.5); /* Strong glowing effect on hover */
+  background-color: #333; /* Slightly lighter background on hover */
 }
