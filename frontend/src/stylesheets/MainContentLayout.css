@@ -82,6 +82,12 @@
   justify-content: flex-start; /* Align content to the top */
   position: relative; /* Set position to relative for absolute positioning */
 }
+.main-content > div {
+  display: flex;
+  justify-content: space-between; /* Ensures space distribution between configuration and buttons */
+  align-items: flex-start; /* Aligns items at the start of the flex container */
+  width: 100%; /* Ensures the div takes full width of its parent */
+}
 
 .profile-heading {
   font-size: 60px; /* Increase font size by 20% */
@@ -148,17 +154,21 @@
 }
 
 .pc-config-container {
-  display: flex;
-  flex-wrap: wrap;
+  flex: 1; /* Takes up only the needed space based on its content */
+  display: flex; /* Keeps existing flex settings */
+  flex-wrap: wrap; /* Ensures wrapping of child elements */
   gap: 20px;
-  padding: 20px; /* Provides padding inside the container */
-  max-height: 600px; /* Example: Adjust based on your UI design */
-  overflow-y: auto; /* Enable vertical scrolling within the container */
+  padding: 20px;
+  max-height: 600px;
+  overflow-y: auto; /* Allows for scrolling within the container */
 }
 
 .pc-config-card {
   width: calc(33.33% - 20px); /* 33.33% width for each card with 20px margin */
   margin-bottom: 20px; /* Bottom margin between rows */
+}
+.pc-config-container {
+  padding-right: 50px;  /* Increase right padding on 1080p screens */
 }
 
 @media (max-width: 1200px) {
@@ -175,24 +185,46 @@
 
 .action-buttons-container {
   display: flex;
-  justify-content: flex-end; /* Aligns items to the right */
-  margin-left: 500px; /* Increase as needed to push more to the right */
+  flex-direction: row; /* Aligns children horizontally */
+  justify-content: flex-end; /* Aligns children to the right of the container */
+  align-items: center; /* Centers items vertically */
+  padding-right: 100px; /* Adds padding to the right */
+  width: 100%; /* Ensure full width */
+}
+  
+.add-config-button {
+  position: absolute; /* Confirm if absolute positioning is needed or change to relative if it causes issues */
+  top: 230px; /* Adjust top position if needed */
+  right: 100px; /* Move it 100px from the right edge of its relative container */
+  height: 180px; /* Increase height further */
+  width: auto; /* Adjust width as needed or keep it responsive */
+  background-color: #2a2a2a; /* Ensure background color is applied */
+  border: 1px solid #2a2a2a; /* Ensure border color is applied */
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 10px 20px; /* Add padding for better text visibility */
+  cursor: pointer;
+  color: white;
+  font-size: 1.2em; /* Optional: Increase font size for better readability */
+  z-index: 10; /* Ensure it's above other components */
 }
 
 .add-config-button {
-  width: 150px;
-  height: 300px;
+  height: 180px; /* Increase height further */
+  width: auto; /* Adjust width as needed or keep it responsive */
   background-color: #2a2a2a !important; /* Ensure background color is applied */
   border: 1px solid #2a2a2a !important; /* Ensure border color is applied */
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  padding: 10px;
+  padding: 10px 20px; /* Add padding for better text visibility */
   cursor: pointer;
   color: white;
   position: absolute; /* Ensure it maintains its position */
   top: 230px; /* Adjust top position */
   right: -60px; /* Adjust right position */
+  font-size: 1.2em; /* Optional: Increase font size for better readability */
 }
 
 .add-config-button:hover {
@@ -261,4 +293,43 @@
   transform: translateY(-5px); /* Slight upward movement on hover */
   box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.5); /* Strong glowing effect on hover */
   background-color: #333; /* Slightly lighter background on hover */
+}
+.view-recommendations-button {
+  flex-grow: 1;  /* Allows button to grow to fill the container */
+  margin: 10px;  /* Provides some spacing between buttons */
+  outline: none !important; /* Ensures no outline is shown, even on focus */
+  box-shadow: none !important; /* Removes any shadow effects */
+  border: none !important; /* Ensures no border */
+  background-color: #2a2a2a;  /* Dark background for consistency */
+  color: #333; /* Adjust text color for better visibility */
+  width: 50%; /* Ensures button takes full width */
+  transition: all 0.3s ease;  /* Smooth transition for effects */
+  border: none;  /* No border */
+  border-radius: 5px;  /* Rounded corners */
+  padding: 12px 20px;  /* Adequate padding */
+  cursor: pointer;  /* Cursor change to indicate clickability */
+  outline: none;  /* Ensures no outline on focus */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);  /* Initial subtle shadow for depth */
+}
+.view-recommendations-button:hover {
+  box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.75);  /* Strong glowing effect on hover */
+  transform: translateY(-3px);  /* Subtle lift effect */
+}
+
+.view-recommendations-button:focus {
+  outline: none !important; /* Double ensure no outline on focus */
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); /* Example: subtle white glow */
+}
+.add-config-button, .view-recommendations-button {
+  flex-grow: 1;  /* Allows buttons to grow to fill the container */
+  margin: 10px;  /* Provides some spacing between buttons */
+  background-color: #2a2a2a;  /* Dark background for consistency */
+  color: white;  /* White text for readability */
+  border: none;  /* No border */
+  border-radius: 5px;  /* Rounded corners */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);  /* Subtle shadow for depth */
+  padding: 12px 20px;  /* Adequate padding */
+  cursor: pointer;  /* Cursor change to indicate clickability */
+  transition: all 0.3s ease;  /* Smooth transition for effects */
+  outline: none;  /* Ensures no outline on focus */
 }

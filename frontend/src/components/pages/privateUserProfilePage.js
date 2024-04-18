@@ -48,16 +48,16 @@ const PrivateUserProfile = () => {
 
   return (
     <div className="main-content">
-      <>
-        <h1 className="profile-heading white-text">Profile</h1>
-        <div className="left-aligned-text">
-          <h3 className="white-text" style={{ marginRight: "20px" }}>Username:
-            <span className="username white-text" style={{ marginLeft: "10px" }}>{username}</span>
-          </h3>
-          <h3 className="white-text" style={{ marginRight: "20px" }}>Email:
-            <span className="email white-text" style={{ marginLeft: "10px" }}>{email}</span>
-          </h3>
-        </div>
+      <h1 className="profile-heading white-text">Profile</h1>
+      <div className="left-aligned-text">
+        <h3 className="white-text" style={{ marginRight: "20px" }}>Username:
+          <span className="username white-text" style={{ marginLeft: "10px" }}>{username}</span>
+        </h3>
+        <h3 className="white-text" style={{ marginRight: "20px" }}>Email:
+          <span className="email white-text" style={{ marginLeft: "10px" }}>{email}</span>
+        </h3>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
         <div className="pc-config-container">
           {pcConfigurations.map((config, index) => (
             <Button key={index} className="pc-config-card" style={{ width: '400px', height: '400px' }} onClick={() => navigate("/preference", { state: { selectedConfig: config } })}>
@@ -76,17 +76,16 @@ const PrivateUserProfile = () => {
             </Button>
           ))}
         </div>
-        <div className="action-buttons-container">
-        <Button className="config-button-new" onClick={() => navigate("/configure")}>
-    <img src="/plus-sign-icon.png" alt="add" style={{ filter: 'invert(100%)' }} />
-    <span>Add more configurations</span>
-</Button>
-          {/* Add the new navigation button for all recommendations */}
+        <div>
+          <Button className="add-config-button" onClick={() => navigate("/configure")}>
+            <img src="/plus-sign-icon.png" alt="add" style={{ filter: 'invert(100%)' }} />
+            <span>Add more configurations</span>
+          </Button>
           <Button className="view-recommendations-button" onClick={() => navigate("/AllMyRecommendations")}>
-    View All My Recommendations
-</Button>
+            View All My Recommendations
+          </Button>
         </div>
-      </>
+      </div>
       <Button className="logout-modal-button" onClick={() => setShow(true)}>Log Out</Button>
       <Modal
         show={show}
