@@ -1,0 +1,61 @@
+/* registerPage.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #2a2a2a; /* Entire page has this background color */
+}
+
+.form-container {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.label, .input, .error-message {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.input, .button {
+    padding: 8px;
+}
+
+.error-message {
+    color: red;
+}
+/* registerPage.css */
+.register-button {
+    flex-grow: 1;  /* Allows button to grow to fill the container */
+    margin: 10px;  /* Provides some spacing around the button */
+    background-color: #2a2a2a;  /* Dark background for consistency */
+    color: white;  /* White text for readability */
+    border: none;  /* No border */
+    border-radius: 5px;  /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);  /* Subtle shadow for depth */
+    padding: 12px 20px;  /* Adequate padding */
+    cursor: pointer;  /* Cursor change to indicate clickability */
+    transition: all 0.3s ease;  /* Smooth transition for effects */
+    outline: none;  /* Ensures no outline on focus */
+}
+
+.register-button:hover {
+    box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.75);  /* Strong glowing effect on hover */
+    transform: translateY(-3px);  /* Subtle lift effect */
+}
+
+.register-button:focus {
+    outline: none !important;  /* Double ensure no outline on focus */
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5); /* Subtle white glow */
+}

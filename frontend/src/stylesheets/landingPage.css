@@ -1,0 +1,25 @@
+/* Landing Page Container */
+.landing-page-container {
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Landing Card */
+.landing-card {
+    width: 400px;
+    height: 400px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Specific styles for the Card inside the landing card to ensure styling consistency */
+.landing-card .card {
+    background-color: #2a2a2a; /* Dark background */
+    color: #fff; /* White text */
+    width: 100%;
+    height: 100%;
+}
