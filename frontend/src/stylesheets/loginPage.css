@@ -1,0 +1,52 @@
+/* loginPage.css */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #2a2a2a;
+}
+
+.form-container {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.button {
+    flex-grow: 1;
+    margin: 10px;
+    background-color: #2a2a2a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+    padding: 12px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.button:hover {
+    box-shadow: 0 0 8px 8px rgba(255, 255, 255, 0.75);
+    transform: translateY(-3px);
+}
+
+.button:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+.label, .input, .error-message {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.input, .button {
+    padding: 8px;
+}
+
+.error-message {
+    color: red;
+}
