@@ -1,35 +1,44 @@
 import React, { useEffect, useState } from "react";
 import getUserInfo from '../utilities/decodeJwt';
-import { useLocation } from 'react-router-dom';
-import Container from 'react-bootstrap/Container';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Nav from 'react-bootstrap/Nav';
 import ReactNavbar from 'react-bootstrap/Navbar';
 import '../stylesheets/Navbar.css';
 
-// Here, we display our Navbar
 export default function Navbar() {
   const [user, setUser] = useState({});
   const location = useLocation(); // Get the current location
   const onHomePage = location.pathname === '/home'; // Check if we're on the home page
 
-
-   useEffect(() => {
+  useEffect(() => {
     setUser(getUserInfo());
   }, []);
-  
-  // if (!user) return null   - for now, let's show the bar even not logged in.
-  // we have an issue with getUserInfo() returning null after a few minutes
-  // it seems.
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Perform logout logic
+    navigate('/'); // Redirect to landing page after logout
+  };
+
   return (
     <ReactNavbar bg="dark" variant="dark" className="vertical-navbar custom-navbar">
       <Nav className="flex-column">
-        {!onHomePage && <Nav.Link href="/">Start</Nav.Link>}
-        {!onHomePage && <Nav.Link href ="/configure">configure</Nav.Link>}
-        {!onHomePage && <Nav.Link href="/privateUserProfile">Profile</Nav.Link>}
-        {!onHomePage && <Nav.Link href="/preference">upgradePreference</Nav.Link>}
-        {!onHomePage && <Nav.Link href="/upgradeSelection">Selection</Nav.Link>}
-        {/* Always show the Home link */}
-        <Nav.Link href="/home">Home</Nav.Link>
+        {!onHomePage && <>
+          <Nav.Link href="/home">
+            <img src='/homeIcon.png' alt="Home" style={{ width: '40px', height: '40px', filter: 'invert(100%)' }} />
+          </Nav.Link>
+          <Nav.Link href="/privateUserProfile">
+            <img src='/profileIcon.png' alt="Profile" style={{ width: '40px', height: '40px', filter: 'invert(100%)' }} />
+          </Nav.Link>
+          <Nav.Link href="/preference">
+            <img src='/upgradeIcon.png' alt="Upgrade Preference" style={{ width: '40px', height: '40px', filter: 'invert(100%)' }} />
+          </Nav.Link>
+          <div className="spacer"></div> {/* Spacer to push logout to the bottom */}
+        </>}
+        {!onHomePage && <Nav.Link as="button" onClick={handleLogout} className="mt-auto"> {/* mt-auto will push this link to the bottom */}
+          <img src='/logoutIcon.png' alt="Logout" style={{ width: '40px', height: '40px', filter: 'invert(100%)' }} />
+        </Nav.Link>}
       </Nav>
     </ReactNavbar>
   );
