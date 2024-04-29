@@ -9,6 +9,7 @@ const UpgradeSelectionPage = () => {
     const [recommendations, setRecommendations] = useState(null);
     const [selectedConfig, setSelectedConfig] = useState(null); // Holds the original configuration
     const [displayConfig, setDisplayConfig] = useState(null);  // Used for rendering updates to the UI
+    const [loading, setLoading] = useState(false);  // State to handle loading
     const location = useLocation();
     const navigate = useNavigate();
     const { payload } = location.state || {};
@@ -24,6 +25,7 @@ const UpgradeSelectionPage = () => {
 
         const fetchRecommendations = async () => {
             if (payload && payload.componentType && payload.model) {
+                setLoading(true);  // Set loading true while fetching data
                 const url = `${process.env.REACT_APP_BACKEND_URL}/pullRecommendations?componentType=${encodeURIComponent(payload.componentType)}&model=${encodeURIComponent(payload.model)}&email=${encodeURIComponent(userInfo.email)}&username=${encodeURIComponent(userInfo.username)}`;
                 try {
                     const response = await axios.get(url);
@@ -35,28 +37,29 @@ const UpgradeSelectionPage = () => {
                 } catch (error) {
                     console.error("Failed to fetch recommendations:", error);
                     setRecommendations([]); // Fallback to an empty array on error
+                } finally {
+                    setLoading(false);  // Reset loading state
                 }
             }
         };
 
         fetchRecommendations();
-    }, [payload]); // React to changes in payload
+    }, [payload, user.email]); // React to changes in payload and user email
 
     const handleRecommendationClick = async (recommendation) => {
         const updatedConfig = { ...displayConfig, [recommendation.componentType.toLowerCase()]: recommendation.new_model };
-        setDisplayConfig(updatedConfig); // Only update the display configuration
-    
-        // Send the component type in lowercase
+        setDisplayConfig(updatedConfig); // Update the display configuration
+
         const updatePayload = {
             username: user.username,
             email: user.email,
-            componentType: recommendation.componentType.toLowerCase(), // Ensure lowercase
+            componentType: recommendation.componentType.toLowerCase(),
             new_model: recommendation.new_model,
-            selectedConfiguration: selectedConfig // Send the original configuration
+            selectedConfiguration: selectedConfig
         };
-    
+
         console.log("Sending payload:", updatePayload); // Debug to check the payload values
-    
+
         try {
             const response = await axios.post('https://pc-building-assistant-backend.onrender.com/editPCConfig', updatePayload);
             console.log('Update success:', response.data);
@@ -69,7 +72,7 @@ const UpgradeSelectionPage = () => {
     return (
         <div className="upgrade-selection-page">
             <h1 className="title">Upgrade Recommendations</h1>
-            {recommendations && recommendations.length > 0 ? (
+            {loading ? <p>Loading...</p> : recommendations && recommendations.length > 0 ? (
                 <div className="boxes-container">
                     {recommendations.map((rec, index) => (
                         <button key={index} className="recommendation-box" onClick={() => handleRecommendationClick(rec)}>
@@ -81,7 +84,6 @@ const UpgradeSelectionPage = () => {
                     ))}
                 </div>
             ) : <p>No recommendations found.</p>}
-
             {displayConfig ? (
                 <div className="selected-config-display" style={{ backgroundColor: '#2a2a2a', color: '#fff', padding: '20px', borderRadius: '10px', marginTop: '20px' }}>
                     <h2>Current Configuration</h2>
